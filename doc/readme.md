@@ -28,7 +28,7 @@ end
 
 class UsersController < ApplicationController
   ## ### Getting a User
-  ## `/users/{id}.json`
+  ## `GET /users/{id}.json`
   ##
   ## #### Format
   ## @@import app/models/user.rb
@@ -51,7 +51,7 @@ And DoubleDoc will generate this markdown document for you:
     You can acces users in our system by using our REST API, blah blah blah...
     
     ### Getting a User
-    `/users/{id}.json`
+    `GET /users/{id}.json`
     
     #### Format
     ```js

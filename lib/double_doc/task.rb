@@ -8,32 +8,28 @@ module DoubleDoc
     include Rake::DSL if defined?(Rake::DSL)
 
     def initialize(task_name, options)
-      @dst     = Pathname.new(options[:destination])
-      @sources = FileList[*options[:sources]]
+      md_dst   = Pathname.new(options[:md_destination])
+      html_dst = Pathname.new(options[:html_destination]) if options[:html_destination]
+      sources  = FileList[*options[:sources]]
       import_handler = DoubleDoc::ImportHandler.new(options[:root] || Rake.original_dir)
 
-      directory(@dst.to_s)
-      task(task_name => @dst.to_s)
+      destinations = [md_dst, html_dst].compact
+      destinations.each do |dst|
+        directory(dst.to_s)
+      end
 
-      @sources.each do |src|
-        dst = @dst + File.basename(src)
+      task(task_name => destinations) do
 
-        file(dst => (double_doc_source_files + [@dst.to_s, src])) do |f|
+        sources.each do |src|
+          dst = md_dst + File.basename(src)
           verbose { puts "#{src} -> #{dst}" }
           File.open(dst, 'w') do |out|
             out.write(import_handler.resolve_imports(File.new(src)))
           end
-
-          CLEAN.include(dst.to_s) if defined?(CLEAN)
         end
 
-        task(task_name => dst)
       end
     end
 
-    def double_doc_source_files
-      libdir = File.expand_path('../..', __FILE__)
-      FileList["#{libdir}/double_doc.rb", "#{libdir}/double_doc/**"]
-    end
   end
 end
