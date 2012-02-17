@@ -36,11 +36,10 @@ end
 ```
 
 You would then write a markdown document about your `User` API:
-```md
-## Users
-You can acces users in our system by using our REST API, blah blah blah...
-@import app/controllers/users_controller.rb
-```
+
+    ## Users
+    You can acces users in our system by using our REST API, blah blah blah...
+    @import app/controllers/users_controller.rb
 
 ### Rake Task
 You can easly use DoubleDoc from Rake, and soon I'll tell you how...
