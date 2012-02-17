@@ -12,10 +12,12 @@ You write your documentation in markdown right in your source code files by doub
 ```ruby
 class User < ActiveRecord::Base
 
+  ## ```js
   ## {
   ##   "id":   1,
   ##   "name": "Mick Staugaard"
   ## }
+  ## ```
   def as_json
     # this comment will not be included in the documentation
     # as it only has a single # character
@@ -27,6 +29,7 @@ end
 class UsersController < ApplicationController
   ## ### Getting a User
   ## `/users/{id}.json`
+  ##
   ## #### Format
   ## @@import app/models/user.rb
   def show
@@ -35,11 +38,28 @@ class UsersController < ApplicationController
 end
 ```
 
-You would then write a markdown document about your `User` API:
+You would then write a markdown document about your User API:
 
     ## Users
     You can acces users in our system by using our REST API, blah blah blah...
+    
     @@import app/controllers/users_controller.rb
+
+And DoubleDoc will generate this markdown document for you:
+
+    ## Users
+    You can acces users in our system by using our REST API, blah blah blah...
+    
+    ### Getting a User
+    `/users/{id}.json`
+    
+    #### Format
+    ```js
+    {
+      "id":   1,
+      "name": "Mick Staugaard"
+    }
+    ```
 
 ### Rake Task
 @import lib/double_doc/task.rb
