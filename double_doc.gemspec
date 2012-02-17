@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = DoubleDoc::VERSION
   s.authors     = ["Mick Staugaard"]
   s.email       = ["mick@staugaard.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "http://staugaard.github.com/double_doc"
+  s.summary     = "Documentation right where you want it"
+  s.description = "A simple framework for writing and generating beautiful documentation for your code"
 
   s.rubyforge_project = "double_doc"
 
