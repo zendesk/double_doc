@@ -5,7 +5,11 @@ $LOAD_PATH.unshift 'lib'
 require 'double_doc/task'
 
 desc "Generate documentation"
-DoubleDoc::Task.new(:doc, :sources => 'doc/readme.md', :md_destination => '.', :html_destination => 'site')
-
+DoubleDoc::Task.new(:doc,
+  :sources => 'doc/readme.md',
+  :md_destination => '.',
+  :html_destination => 'site',
+  :title => 'API Documentaion'
+)
 
 task :default => [:doc]
