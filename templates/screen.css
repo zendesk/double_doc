@@ -329,10 +329,16 @@ a {
 
 #content pre {
   background: #f8f8ff;
-  padding: 1px 2px;
+  padding: 10px;
   border: 1px solid #ddd;
+  border-radius: 6px;
   word-wrap: break-word;
 }
+
+.highlight {
+  background: none;
+}
+
 
 #content tt {
   display: block;
