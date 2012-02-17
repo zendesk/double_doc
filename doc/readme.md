@@ -1,4 +1,5 @@
-## DoubleDoc
+@import lib/double_doc/version.rb
+
 One of the challenges you face when writing public documention for code or APIs, is that you have to remember to update the documentation
 when ever you change the API. The main reason why this is a problem is that very often the documentation lives very for from your code.
 
