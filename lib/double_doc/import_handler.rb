@@ -30,11 +30,11 @@ module DoubleDoc
         if match = line.match(/(^|\s+)@import\s+([^\s]+)\s*$/)
           doc << get_doc(match[2])
         else
-          doc << line.gsub('@@import', '@import')
+          doc << line.gsub('@@import', '@import').rstrip
         end
       end
 
-      doc.join()
+      doc.join("\n")
     end
 
     def get_doc(path)
