@@ -63,3 +63,9 @@ And DoubleDoc will generate this markdown document for you:
 
 ### Rake Task
 @import lib/double_doc/task.rb
+
+### TODO
+@import doc/todo.md
+
+### License
+@import doc/license.md
