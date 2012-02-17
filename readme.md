@@ -69,6 +69,8 @@ You can easly use DoubleDoc from Rake, and soon I'll tell you how...
 ### TODO
 * Tests
 * Support for directory structures
+* Documentation for the Rake task
+* Documentation for the Guard
 
 ### License
 #### The MIT License
