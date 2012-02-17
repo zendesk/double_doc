@@ -20,5 +20,8 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+
+  s.add_runtime_dependency "erubis"
+  s.add_runtime_dependency "redcarpet"
+  s.add_runtime_dependency "pygments.rb"
 end

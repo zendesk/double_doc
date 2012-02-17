@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="screen.css">
+    <style type="text/css">
+      <%= highlight_css %>
+    </style>
+  </head>
+  <body>
+    <div id="nav">
+      <div id="header">
+        <a href="#" id="logo"><%= title %></a>
+      </div>
+      <ul id="sections">
+        <% sitemap.each do |item| %>
+          <li>
+            <a class="source" href="<%= item.href %>"><%= item.title %></a>
+            <% if item.children.any? %>
+              <ul>
+                <% item.children.each do |child| %>
+                  <li><a href="<%= child.href %>"><%= child.title %></a></li>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        <% end %>
+
+      </ul>
+    </div>
+    <div id="content">
+      <%= body %>
+    </div>
+  </body>
+</html>

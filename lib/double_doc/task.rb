@@ -1,5 +1,6 @@
 require 'pathname'
 require 'double_doc/import_handler'
+require 'double_doc/html_generator'
 
 module DoubleDoc
 
@@ -22,10 +23,15 @@ module DoubleDoc
 
         sources.each do |src|
           dst = md_dst + File.basename(src)
-          verbose { puts "#{src} -> #{dst}" }
+          puts "#{src} -> #{dst}"
           File.open(dst, 'w') do |out|
             out.write(import_handler.resolve_imports(File.new(src)))
           end
+        end
+
+        if html_dst
+          html_generator = DoubleDoc::HtmlGenerator.new(FileList[(md_dst + '*.md').to_s].sort, options)
+          html_generator.generate
         end
 
       end
