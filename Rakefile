@@ -19,8 +19,8 @@ task :publish => :doc do
   `git commit -m 'Updated documentation'`
   `git push origin master`
   `git checkout gh-pages`
-  `cp site/screen.css .`
-  `cp site/readme.html index.html`
+  `cp site/* .`
+  `cp readme.html index.html`
   `git commit -a -m 'Updated site'`
   `git push origin gh-pages`
   `git co master`
