@@ -10,6 +10,7 @@ module DoubleDoc
       @template_file = options[:html_template] || File.expand_path("../../templates/default.html.erb", File.dirname(__FILE__))
       @output_directory = Pathname.new(options[:html_destination])
       @html_renderer = options[:html_renderer] || HtmlRenderer
+      @stylesheet = options[:html_css] || 'screen.css'
       @title = options[:title] || 'Documentation'
     end
 
@@ -24,10 +25,11 @@ module DoubleDoc
           markdown = File.new(src).read
           body = @html_renderer.render(markdown)
           html = template.result(
-            :title => @title,
-            :body => body,
+            :title         => @title,
+            :body          => body,
+            :css           => @stylesheet,
             :highlight_css => @html_renderer.stylesheet,
-            :sitemap => sitemap
+            :sitemap       => sitemap
           )
           out.write(html)
         end
