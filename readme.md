@@ -63,7 +63,39 @@ And DoubleDoc will generate this markdown document for you:
     ```
 
 ### Rake Task
-You can easly use DoubleDoc from Rake, and soon I'll tell you how...
+It is very easy to set up a rake task for generating your documentation. All you have to do is
+tell DoubleDoc what the input files are, and where you want the output to go.
+
+```ruby
+require 'double_doc'
+
+DoubleDoc::Task.new(:doc,
+  :sources          => 'doc/source/*.md',
+  :md_destination   => 'doc/generated',
+  :html_destination => 'site'
+)
+```
+
+The available options are:
+
+| name                 | Description
+| -------------------- | -----------
+| __sources__          | __Required__. This tells Double doc where to look for the source of the documentation. Can be either a string or an array of strings.
+| __md_destination__   | __Required__. This is the directory where you want the generated markdown files to go.
+| __html_destination__ | If you want a pretty HTML version of your documentation, all you have to do is to say where you want it.
+| __html_template__    | You can use your own custom ERB template for HTML rendering. Have a look in the one we ship with DoubleDoc for inspiration (templates/default.html.erb).
+| __html_renderer__    | If you want full control of the HTML rendering you can use your own implementation. Defaults to `DoubleDoc::HtmlRenderer`.
+| __html_css__         | You can use your own custom CSS document by specifying it's path here.
+| __title__            | The title you want in the generated HTML. Defaults to "Documentation".
+
+If you just want to use double doc to generate your readme.md for github, you should write your source in doc/readme.md and put his in your Rakefile:
+
+```ruby
+require 'double_doc'
+
+DoubleDoc::Task.new(:doc, :sources => 'doc/source/readme.md', :md_destination => '.')
+```
+Then all you have to do is to run `rake doc`, and you will have a `readme.md` in the root of your project.
 
 ### Notes
 DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because if it's dependency on redcarpet.
@@ -76,6 +108,7 @@ DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work o
 * Documentation for the Rake task
 * Documentation for the Guard
 * Add support for extracting documentation from JavaScript files
+* Better styling of tables
 
 ### License
 #### The MIT License
