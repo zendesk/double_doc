@@ -5,6 +5,7 @@ require 'double_doc/html_generator'
 
 module DoubleDoc
 
+  ## ### Rake Task
   ## You can easly use DoubleDoc from Rake, and soon I'll tell you how...
   class Task
     include Rake::DSL if defined?(Rake::DSL)
