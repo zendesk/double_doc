@@ -19,9 +19,9 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "guard"
-  s.add_development_dependency "guard-rake"
 
+  s.add_runtime_dependency "rake"
   s.add_runtime_dependency "erubis"
-  s.add_runtime_dependency "redcarpet"
-  s.add_runtime_dependency "pygments.rb"
+  s.add_runtime_dependency "redcarpet", "~> 2.1"
+  s.add_runtime_dependency "pygments.rb", "~> 0.2"
 end
