@@ -9,7 +9,6 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-desc "Generate documentation"
 DoubleDoc::Task.new(:doc,
   :sources => 'doc/readme.md',
   :md_destination => '.',

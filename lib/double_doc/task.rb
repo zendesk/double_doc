@@ -21,6 +21,7 @@ module DoubleDoc
         directory(dst.to_s)
       end
 
+      desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation from #{sources.join(', ')}"
       task(task_name => destinations) do
 
         sources.each do |src|
