@@ -63,7 +63,6 @@ And DoubleDoc will generate this markdown document for you:
     ```
 
 ### Rake Task
-
 You can easly use DoubleDoc from Rake, and soon I'll tell you how...
 
 ### TODO

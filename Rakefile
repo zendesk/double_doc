@@ -1,8 +1,13 @@
-require "bundler/gem_tasks"
-
 $LOAD_PATH.unshift 'lib'
-
+require "bundler/gem_tasks"
 require 'double_doc/task'
+require 'rake/testtask'
+
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/*_test.rb'
+  test.verbose = true
+end
 
 desc "Generate documentation"
 DoubleDoc::Task.new(:doc,
@@ -26,4 +31,4 @@ task :publish => :doc do
   `git co master`
 end
 
-task :default => [:doc]
+task :default => [:test]
