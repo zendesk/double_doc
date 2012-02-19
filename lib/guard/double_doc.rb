@@ -3,7 +3,7 @@ require 'guard/guard'
 require 'rake'
 
 module Guard
-  class Doubledoc < Guard
+  class DoubleDoc < Guard
     include ::Rake::DSL
 
     def start
@@ -27,7 +27,7 @@ module Guard
     def run_rake_task
       UI.info "generating double docs"
       ::Rake::Task.tasks.each { |t| t.reenable }
-      ::Rake::Task[@options[:task]].invoke
+      ::Rake::Task[@options[:rake_task]].invoke
     end
   end
 end

@@ -1,3 +1,4 @@
+require 'rake'
 require 'pathname'
 require 'double_doc/import_handler'
 require 'double_doc/html_generator'
