@@ -36,7 +36,7 @@ module DoubleDoc
   ## ```ruby
   ## require 'double_doc'
   ##
-  ## DoubleDoc::Task.new(:doc, :sources => 'doc/source/readme.md', :md_destination => '.')
+  ## DoubleDoc::Task.new(:doc, :sources => 'doc/readme.md', :md_destination => '.')
   ## ```
   ## Then all you have to do is to run `rake doc`, and you will have a `readme.md` in the root of your project.
   class Task
