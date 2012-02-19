@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 describe "the doc extractor" do
   describe "on ruby files" do
