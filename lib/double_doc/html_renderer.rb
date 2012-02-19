@@ -5,7 +5,7 @@ module DoubleDoc
   class HtmlRenderer
 
     def self.render(text)
-      markdown = Redcarpet::Markdown.new(RedcarpetRenderer, :fenced_code_blocks => true)
+      markdown = Redcarpet::Markdown.new(RedcarpetRenderer, :fenced_code_blocks => true, :no_intra_emphasis => true, :tables => true)
       markdown.render(text)
     end
 
