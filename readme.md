@@ -99,7 +99,7 @@ DoubleDoc::Task.new(:doc, :sources => 'doc/readme.md', :md_destination => '.')
 ```
 Then all you have to do is to run `rake doc`, and you will have a `readme.md` in the root of your project.
 
-If you have a gh-pages branch set up in your repository, you can event run `rake doc:publish` to generate html documentation and push it to your github pages.
+You can even run `rake doc:publish` to generate html documentation and push it to your Github Pages.
 
 ### Notes
 DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because if it's dependency on redcarpet.

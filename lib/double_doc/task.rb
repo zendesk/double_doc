@@ -40,7 +40,7 @@ module DoubleDoc
   ## ```
   ## Then all you have to do is to run `rake doc`, and you will have a `readme.md` in the root of your project.
   ##
-  ## If you have a gh-pages branch set up in your repository, you can event run `rake doc:publish` to generate html documentation and push it to your github pages.
+  ## You can even run `rake doc:publish` to generate html documentation and push it to your Github Pages.
   class Task
     include Rake::DSL if defined?(Rake::DSL)
 
@@ -73,38 +73,52 @@ module DoubleDoc
 
       end
 
-      has_github_pages = !`git branch | grep 'gh-pages'`.empty? rescue false
+      namespace(task_name) do
 
-      if has_github_pages
-        namespace(task_name) do
-          desc "Publish DoubleDoc documentation to Github Pages"
-          task :publish do
-            git_clean = `git status -s`.empty? rescue false
-            raise "Your local git repository needs to be clean for this task to run" unless git_clean
+        desc "Publish DoubleDoc documentation to Github Pages"
+        task :publish do
+          git_clean = `git status -s`.empty? rescue false
+          raise "Your local git repository needs to be clean for this task to run" unless git_clean
 
-            git_branch = `git branch | grep "*"`.match(/\* (.*)/)[1] rescue 'master'
+          git_branch = `git branch | grep "*"`.match(/\* (.*)/)[1] rescue 'master'
 
-            Dir.mktmpdir do |dir|
-              generate_task.execute(:html_destination => dir)
-              html_files = Dir.glob(Pathname.new(dir) + '*.html')
+          Dir.mktmpdir do |dir|
+            generate_task.execute(:html_destination => dir)
+            html_files = Dir.glob(Pathname.new(dir) + '*.html')
 
-              `git add .`
-              `git commit -m 'Updated documentation'`
+            `git add .`
+            `git commit -m 'Updated documentation'`
+
+            has_github_pages = !`git branch | grep 'gh-pages'`.empty? rescue false
+
+            unless has_github_pages
+              puts "Setting up gh-pages branch"
+
+              `git symbolic-ref HEAD refs/heads/gh-pages`
+              `rm .git/index`
+              `git clean -fdx`
+            else
               `git checkout gh-pages`
               `git pull origin gh-pages`
-              `cp #{dir}/* .`
-              if html_files.size == 1
-                `cp #{html_files[0]} index.html`
-              else
-                warn("You should probably generate an index.html")
-              end
-              `git add .`
-              `git commit -m 'Updated Github Pages'`
-              `git push origin gh-pages`
-              `git co #{git_branch}`
             end
+
+            puts "Publishing your Github Pages"
+            `cp #{dir}/* .`
+            if html_files.size == 1
+              `cp #{html_files[0]} index.html`
+            else
+              warn("You should probably generate an index.html")
+            end
+
+            `git add .`
+            `git commit -m 'Updated Github Pages'`
+            `git push origin gh-pages`
+            `git co #{git_branch}`
+
+            puts "Your Github Pages has been published. You will receive an email from Github when they are online."
           end
         end
+
       end
     end
 
