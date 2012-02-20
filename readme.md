@@ -7,7 +7,9 @@ This is the problem DoubleDoc tries to solve.
 
 DoubleDoc allows you to write the documentation right where your code is, and you can combine it all into a well structured document.
 
-### Format
+This document was generated using DoubleDoc, and the source of this project is a great source for inspiration for how to use DoubleDoc.
+
+### Documentation Format
 You write your documentation in markdown right in your source code files by double commenting it:
 
 ```ruby
@@ -88,7 +90,7 @@ The available options are:
 | __html_css__         | You can use your own custom CSS document by specifying it's path here.
 | __title__            | The title you want in the generated HTML. Defaults to "Documentation".
 
-If you just want to use double doc to generate your readme.md for github, you should write your source in doc/readme.md and put his in your Rakefile:
+If you just want to use double doc to generate your readme.md for github, you should write your documentation in doc/readme.md and put his in your Rakefile:
 
 ```ruby
 require 'double_doc'

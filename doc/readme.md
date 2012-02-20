@@ -7,7 +7,9 @@ This is the problem DoubleDoc tries to solve.
 
 DoubleDoc allows you to write the documentation right where your code is, and you can combine it all into a well structured document.
 
-### Format
+This document was generated using DoubleDoc, and the source of this project is a great source for inspiration for how to use DoubleDoc.
+
+### Documentation Format
 You write your documentation in markdown right in your source code files by double commenting it:
 
 ```ruby
