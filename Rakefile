@@ -4,16 +4,17 @@ require 'double_doc/task'
 require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
+  test.libs   << 'lib'
+  test.libs   << 'test'
   test.pattern = 'test/**/*_test.rb'
   test.verbose = true
 end
 
 DoubleDoc::Task.new(:doc,
-  :sources => 'doc/readme.md',
-  :md_destination => '.',
-  :html_destination => 'site',
-  :title => 'API Documentaion'
+  :title            => 'API Documentaion',
+  :sources          => 'doc/readme.md',
+  :md_destination   => '.',
+  :html_destination => 'site'
 )
 
 desc "Publish docs to github"
