@@ -12,7 +12,7 @@ end
 
 DoubleDoc::Task.new(:doc,
   :title            => 'API Documentaion',
-  :sources          => 'doc/readme.md',
+  :sources          => 'doc/README.md',
   :md_destination   => '.',
   :html_destination => 'site'
 )

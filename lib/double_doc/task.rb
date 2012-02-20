@@ -31,12 +31,12 @@ module DoubleDoc
   ## | __html_css__         | You can use your own custom CSS document by specifying it's path here.
   ## | __title__            | The title you want in the generated HTML. Defaults to "Documentation".
   ##
-  ## If you just want to use double doc to generate your readme.md for github, you should write your documentation in doc/readme.md and put his in your Rakefile:
+  ## If you just want to use double doc to generate your README.md for github, you should write your documentation in doc/README.md and put his in your Rakefile:
   ##
   ## ```ruby
   ## require 'double_doc'
   ##
-  ## DoubleDoc::Task.new(:doc, :sources => 'doc/readme.md', :md_destination => '.')
+  ## DoubleDoc::Task.new(:doc, :sources => 'doc/README.md', :md_destination => '.')
   ## ```
   ## Then all you have to do is to run `rake doc`, and you will have a `readme.md` in the root of your project.
   ##
