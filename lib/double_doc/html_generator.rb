@@ -28,7 +28,6 @@ module DoubleDoc
             :title         => @title,
             :body          => body,
             :css           => @stylesheet,
-            :highlight_css => @html_renderer.stylesheet,
             :sitemap       => sitemap
           )
           out.write(html)

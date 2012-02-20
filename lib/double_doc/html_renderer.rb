@@ -13,10 +13,6 @@ module DoubleDoc
       text.strip.downcase.gsub(/\s+/, '-')
     end
 
-    def self.stylesheet
-      Pygments.css('.highlight')
-    end
-
     class RedcarpetRenderer < Redcarpet::Render::HTML
       def header(text, level)
         "<h#{level} id=\"#{DoubleDoc::HtmlRenderer.generate_id(text)}\">#{text}</h#{level}>"
