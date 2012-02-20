@@ -5,71 +5,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Documentaion</title>
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
-    <style type="text/css">
-      .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #f8f8f8; }
-.highlight .c { color: #408080; font-style: italic } /* Comment */
-.highlight .err { border: 1px solid #FF0000 } /* Error */
-.highlight .k { color: #008000; font-weight: bold } /* Keyword */
-.highlight .o { color: #666666 } /* Operator */
-.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
-.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
-.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
-.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
-.highlight .gd { color: #A00000 } /* Generic.Deleted */
-.highlight .ge { font-style: italic } /* Generic.Emph */
-.highlight .gr { color: #FF0000 } /* Generic.Error */
-.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-.highlight .gi { color: #00A000 } /* Generic.Inserted */
-.highlight .go { color: #808080 } /* Generic.Output */
-.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
-.highlight .gs { font-weight: bold } /* Generic.Strong */
-.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.highlight .gt { color: #0040D0 } /* Generic.Traceback */
-.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
-.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
-.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
-.highlight .kp { color: #008000 } /* Keyword.Pseudo */
-.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
-.highlight .kt { color: #B00040 } /* Keyword.Type */
-.highlight .m { color: #666666 } /* Literal.Number */
-.highlight .s { color: #BA2121 } /* Literal.String */
-.highlight .na { color: #7D9029 } /* Name.Attribute */
-.highlight .nb { color: #008000 } /* Name.Builtin */
-.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
-.highlight .no { color: #880000 } /* Name.Constant */
-.highlight .nd { color: #AA22FF } /* Name.Decorator */
-.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
-.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
-.highlight .nf { color: #0000FF } /* Name.Function */
-.highlight .nl { color: #A0A000 } /* Name.Label */
-.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
-.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
-.highlight .nv { color: #19177C } /* Name.Variable */
-.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
-.highlight .w { color: #bbbbbb } /* Text.Whitespace */
-.highlight .mf { color: #666666 } /* Literal.Number.Float */
-.highlight .mh { color: #666666 } /* Literal.Number.Hex */
-.highlight .mi { color: #666666 } /* Literal.Number.Integer */
-.highlight .mo { color: #666666 } /* Literal.Number.Oct */
-.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
-.highlight .sc { color: #BA2121 } /* Literal.String.Char */
-.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
-.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
-.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
-.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
-.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
-.highlight .sx { color: #008000 } /* Literal.String.Other */
-.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
-.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
-.highlight .ss { color: #19177C } /* Literal.String.Symbol */
-.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
-.highlight .vc { color: #19177C } /* Name.Variable.Class */
-.highlight .vg { color: #19177C } /* Name.Variable.Global */
-.highlight .vi { color: #19177C } /* Name.Variable.Instance */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
-    </style>
     <link rel="stylesheet" href="screen.css">
   </head>
   <body>
@@ -81,7 +16,7 @@
           <li>
             <a class="source" href="readme.html">DoubleDoc 1.0</a>
               <ul>
-                  <li><a href="readme.html#format">Format</a></li>
+                  <li><a href="readme.html#documentation-format">Documentation Format</a></li>
                   <li><a href="readme.html#rake-task">Rake Task</a></li>
                   <li><a href="readme.html#notes">Notes</a></li>
                   <li><a href="readme.html#todo">TODO</a></li>
@@ -99,7 +34,9 @@ when ever you change the API. The main reason why this is a problem is that very
 <p>This is the problem DoubleDoc tries to solve.</p>
 
 <p>DoubleDoc allows you to write the documentation right where your code is, and you can combine it all into a well structured document.</p>
-<h3 id="format">Format</h3>
+
+<p>This document was generated using DoubleDoc, and the source of this project is a great source for inspiration for how to use DoubleDoc.</p>
+<h3 id="documentation-format">Documentation Format</h3>
 <p>You write your documentation in markdown right in your source code files by double commenting it:</p>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
 
@@ -201,7 +138,7 @@ tell DoubleDoc what the input files are, and where you want the output to go.</p
 </tr>
 </tbody></table>
 
-<p>If you just want to use double doc to generate your readme.md for github, you should write your source in doc/readme.md and put his in your Rakefile:</p>
+<p>If you just want to use double doc to generate your readme.md for github, you should write your documentation in doc/readme.md and put his in your Rakefile:</p>
 <div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;double_doc&#39;</span>
 
 <span class="no">DoubleDoc</span><span class="o">::</span><span class="no">Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span> <span class="ss">:sources</span> <span class="o">=&gt;</span> <span class="s1">&#39;doc/readme.md&#39;</span><span class="p">,</span> <span class="ss">:md_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
@@ -220,7 +157,6 @@ tell DoubleDoc what the input files are, and where you want the output to go.</p
 <li>Documentation for the Rake task</li>
 <li>Documentation for the Guard</li>
 <li>Add support for extracting documentation from JavaScript files</li>
-<li>Better styling of tables</li>
 </ul>
 <h3 id="license">License</h3><h4 id="the-mit-license">The MIT License</h4>
 <p>Copyright © 2012 <a href="mailto:mick@staugaard.com">Mick Staugaard</a></p>
