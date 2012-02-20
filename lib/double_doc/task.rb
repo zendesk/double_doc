@@ -31,7 +31,7 @@ module DoubleDoc
   ## | __html_css__         | You can use your own custom CSS document by specifying it's path here.
   ## | __title__            | The title you want in the generated HTML. Defaults to "Documentation".
   ##
-  ## If you just want to use double doc to generate your readme.md for github, you should write your source in doc/readme.md and put his in your Rakefile:
+  ## If you just want to use double doc to generate your readme.md for github, you should write your documentation in doc/readme.md and put his in your Rakefile:
   ##
   ## ```ruby
   ## require 'double_doc'
@@ -46,7 +46,6 @@ module DoubleDoc
       md_dst   = Pathname.new(options[:md_destination])
       html_dst = Pathname.new(options[:html_destination]) if options[:html_destination]
       sources  = FileList[*options[:sources]]
-      import_handler = DoubleDoc::ImportHandler.new(options[:root] || Rake.original_dir)
 
       destinations = [md_dst, html_dst].compact
       destinations.each do |dst|
@@ -55,6 +54,7 @@ module DoubleDoc
 
       desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation from #{sources.join(', ')}"
       task(task_name => destinations) do
+        import_handler = DoubleDoc::ImportHandler.new(options[:root] || Rake.original_dir)
 
         sources.each do |src|
           dst = md_dst + File.basename(src)
