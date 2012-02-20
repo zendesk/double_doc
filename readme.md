@@ -110,7 +110,6 @@ DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work o
 * Documentation for the Rake task
 * Documentation for the Guard
 * Add support for extracting documentation from JavaScript files
-* Better styling of tables
 
 ### License
 #### The MIT License

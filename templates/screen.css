@@ -250,18 +250,34 @@ a {
 
 #content table {
   margin-bottom: 1.625em;
+  padding-bottom: 0.5em;
   border-collapse: collapse;
+  border-spacing: 0;
   font-size: 80%;
+  display: block;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #content th {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 #content tr, #content th, #content td {
   margin: 0;
   padding: 0 0.7em;
   height: 26px;
+}
+
+#content table tbody tr:nth-child(odd) {
+  background-color: #F8F8F8;
+}
+
+#content table thead tr {
+  border-bottom: 1px solid #DADADA;
+  line-height: 240%;
 }
 
 #content tfoot {
@@ -329,17 +345,12 @@ a {
 }
 
 #content pre {
-  background: #f8f8ff;
+  background: #F8F8F8;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 6px;
   word-wrap: break-word;
 }
-
-.highlight {
-  background: none;
-}
-
 
 #content tt {
   display: block;
