@@ -138,16 +138,16 @@ tell DoubleDoc what the input files are, and where you want the output to go.</p
 </tr>
 </tbody></table>
 
-<p>If you just want to use double doc to generate your readme.md for github, you should write your documentation in doc/readme.md and put his in your Rakefile:</p>
+<p>If you just want to use double doc to generate your README.md for github, you should write your documentation in doc/README.md and put his in your Rakefile:</p>
 <div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;double_doc&#39;</span>
 
-<span class="no">DoubleDoc</span><span class="o">::</span><span class="no">Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span> <span class="ss">:sources</span> <span class="o">=&gt;</span> <span class="s1">&#39;doc/readme.md&#39;</span><span class="p">,</span> <span class="ss">:md_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="no">DoubleDoc</span><span class="o">::</span><span class="no">Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span> <span class="ss">:sources</span> <span class="o">=&gt;</span> <span class="s1">&#39;doc/README.md&#39;</span><span class="p">,</span> <span class="ss">:md_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
 </pre>
 </div>
 
 <p>Then all you have to do is to run <code>rake doc</code>, and you will have a <code>readme.md</code> in the root of your project.</p>
 
-<p>You can even run <code>rake doc:publish</code> to generate html documentation and push it to your Github Pages.</p>
+<p>If you have a gh-pages branch set up in your repository, you can event run <code>rake doc:publish</code> to generate html documentation and push it to your github pages.</p>
 <h3 id="notes">Notes</h3>
 <p>DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because if it&#39;s dependency on redcarpet.</p>
 
