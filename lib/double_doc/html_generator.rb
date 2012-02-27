@@ -64,7 +64,7 @@ module DoubleDoc
     end
 
     def copy_assets
-      if @html_renderer == HtmlRenderer
+      if @stylesheet == 'screen.css'
         FileUtils.cp(File.expand_path("../../templates/screen.css", File.dirname(__FILE__)), @output_directory)
       end
     end
