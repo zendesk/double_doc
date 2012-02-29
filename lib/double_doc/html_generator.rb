@@ -15,6 +15,7 @@ module DoubleDoc
     end
 
     def generate
+      FileUtils.mkdir_p(@output_directory)
       copy_assets
 
       @sources.each do |src|
@@ -22,7 +23,8 @@ module DoubleDoc
         puts "#{src} -> #{dst}"
         FileUtils.mkdir_p(File.dirname(dst))
         File.open(dst, 'w') do |out|
-          markdown = File.new(src).read
+          markdown = self.class.convert_links_to_html!(File.new(src).read)
+
           body = @html_renderer.render(markdown)
           html = template.result(
             :title         => @title,
@@ -71,6 +73,13 @@ module DoubleDoc
 
     def template
       @template ||= Erubis::Eruby.new(File.read(@template_file))
+    end
+
+    def self.convert_links_to_html!(markdown)
+      markdown.gsub!(/(\[[^\]]+\]\([^\)]+)\.md([^\)]*)\)/) do |match|
+        $1 + '.html' + $2 + ')'
+      end
+      markdown
     end
 
     class SitemapItem
