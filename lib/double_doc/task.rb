@@ -59,16 +59,19 @@ module DoubleDoc
       generate_task = task(task_name => destinations) do |t, args|
         import_handler = DoubleDoc::ImportHandler.new(options[:root] || Rake.original_dir)
 
+        generated_md_files = []
+
         sources.each do |src|
           dst = md_dst + File.basename(src)
           puts "#{src} -> #{dst}"
           File.open(dst, 'w') do |out|
             out.write(import_handler.resolve_imports(File.new(src)))
           end
+          generated_md_files << dst
         end
 
         if html_dst || args[:html_destination]
-          html_generator = DoubleDoc::HtmlGenerator.new(FileList[(md_dst + '*.md').to_s].sort, options.merge(args))
+          html_generator = DoubleDoc::HtmlGenerator.new(generated_md_files, options.merge(args))
           html_generator.generate
         end
 

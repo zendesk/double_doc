@@ -5,19 +5,22 @@ require 'fileutils'
 
 module DoubleDoc
   class HtmlGenerator
+    DEFAULT_CSS = File.expand_path("../../templates/screen.css", File.dirname(__FILE__)).freeze
+
     def initialize(sources, options)
       @sources = sources
       @template_file = options[:html_template] || File.expand_path("../../templates/default.html.erb", File.dirname(__FILE__))
       @output_directory = Pathname.new(options[:html_destination])
       @html_renderer = options[:html_renderer] || HtmlRenderer
-      @stylesheet = options[:html_css] || 'screen.css'
+      @stylesheet = options[:html_css] || DEFAULT_CSS
       @title = options[:title] || 'Documentation'
     end
 
     def generate
-      FileUtils.rm_rf(@output_directory)
       FileUtils.mkdir_p(@output_directory)
+
       copy_assets
+      generated_files = [@output_directory + File.basename(@stylesheet)]
 
       @sources.each do |src|
         dst = @output_directory + File.basename(src).sub(/\.md$/, '.html')
@@ -30,12 +33,15 @@ module DoubleDoc
           html = template.result(
             :title         => @title,
             :body          => body,
-            :css           => @stylesheet,
+            :css           => File.basename(@stylesheet),
             :sitemap       => sitemap
           )
           out.write(html)
         end
+        generated_files << dst
       end
+
+      clean_other_files(generated_files)
     end
 
     def sitemap
@@ -67,13 +73,18 @@ module DoubleDoc
     end
 
     def copy_assets
-      if @stylesheet == 'screen.css'
-        FileUtils.cp(File.expand_path("../../templates/screen.css", File.dirname(__FILE__)), @output_directory)
+      if @stylesheet == DEFAULT_CSS
+        FileUtils.cp(DEFAULT_CSS, @output_directory)
       end
     end
 
     def template
       @template ||= Erubis::Eruby.new(File.read(@template_file))
+    end
+
+    def clean_other_files(except)
+      files_to_delete = Dir.glob(@output_directory + '**/*') - except.map(&:to_s)
+      FileUtils.rm_rf(files_to_delete)
     end
 
     def self.convert_links_to_html!(markdown)
