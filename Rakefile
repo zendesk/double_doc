@@ -18,3 +18,6 @@ DoubleDoc::Task.new(:doc,
 )
 
 task :default => [:test]
+
+desc 'test release and publish'
+task :release_and_publish => [:test, :release, 'doc:publish']
