@@ -6,9 +6,11 @@ describe "the html generator" do
   before do
     @root = Pathname.new(Dir.mktmpdir)
     @input_file_name  = @root + 'source/input.md'
-    @output_file_name = @root + 'destination/input.html'
+    @destination      = @root + 'destination'
+    @output_file_name = @destination + 'input.html'
     Dir.mkdir(@root + 'source')
-    @generator = DoubleDoc::HtmlGenerator.new([@input_file_name], { :html_destination => @root + 'destination' })
+    Dir.mkdir(@destination)
+    @generator = DoubleDoc::HtmlGenerator.new([@input_file_name], { :html_destination => @destination })
   end
 
   after do
@@ -24,11 +26,15 @@ describe "the html generator" do
         f.puts "and a link with a fragment [params](params.md#foo-bar)"
       end
 
+      File.open(@destination + 'some_trash.html', 'w') do |f|
+        f.puts 'what ever'
+      end
+
       @generator.generate
     end
 
     it "should put an html document in the destination directory" do
-      assert File.exist?(@output_file_name)
+      assert File.exist?(@output_file_name), 'did not create the html file'
     end
 
     it "should convert .md links to .html links" do
@@ -36,6 +42,10 @@ describe "the html generator" do
       output.must_match(/<a href="other.html">the other file<\/a>/)
       output.must_match(/<a href="params.html\?foo=bar">params<\/a>/)
       output.must_match(/<a href="params.html#foo-bar">params<\/a>/)
+    end
+
+    it "should clean the destination for other files" do
+      assert !File.exist?(@destination + 'some_trash.html'), 'did not clean the destination directory'
     end
   end
 end

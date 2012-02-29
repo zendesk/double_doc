@@ -15,6 +15,7 @@ module DoubleDoc
     end
 
     def generate
+      FileUtils.rm_rf(@output_directory)
       FileUtils.mkdir_p(@output_directory)
       copy_assets
 
