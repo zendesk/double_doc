@@ -48,7 +48,7 @@ module DoubleDoc
     def initialize(task_name, options)
       md_dst   = Pathname.new(options[:md_destination])
       html_dst = Pathname.new(options[:html_destination]) if options[:html_destination]
-      sources  = FileList[*options[:sources]]
+      sources  = FileList[*options[:sources]].uniq
 
       destinations = [md_dst, html_dst].compact
       destinations.each do |dst|
