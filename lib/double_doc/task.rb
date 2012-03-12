@@ -56,7 +56,7 @@ module DoubleDoc
       end
 
       desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation from #{sources.join(', ')}"
-      generate_task = task(task_name => destinations) do |t, args|
+      generated_task = task(task_name => destinations) do |t, args|
         import_handler = DoubleDoc::ImportHandler.new(options[:root] || Rake.original_dir)
 
         generated_md_files = []
@@ -89,7 +89,7 @@ module DoubleDoc
             git_branch = `git branch | grep "*"`.match(/\* (.*)/)[1] rescue 'master'
 
             Dir.mktmpdir do |dir|
-              generate_task.execute(:html_destination => dir)
+              generated_task.execute(:html_destination => dir)
               html_files = Dir.glob(Pathname.new(dir) + '*.html')
 
               `git add .`

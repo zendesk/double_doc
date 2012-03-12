@@ -43,9 +43,5 @@ describe "the html generator" do
       output.must_match(/<a href="params.html\?foo=bar">params<\/a>/)
       output.must_match(/<a href="params.html#foo-bar">params<\/a>/)
     end
-
-    it "should clean the destination for other files" do
-      assert !File.exist?(@destination + 'some_trash.html'), 'did not clean the destination directory'
-    end
   end
 end

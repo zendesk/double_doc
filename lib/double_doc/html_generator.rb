@@ -41,7 +41,6 @@ module DoubleDoc
         generated_files << dst
       end
 
-      clean_other_files(generated_files)
     end
 
     def sitemap
@@ -73,18 +72,13 @@ module DoubleDoc
     end
 
     def copy_assets
-      if @stylesheet == DEFAULT_CSS
-        FileUtils.cp(DEFAULT_CSS, @output_directory)
+      if @stylesheet
+        FileUtils.cp(@stylesheet, @output_directory)
       end
     end
 
     def template
       @template ||= Erubis::Eruby.new(File.read(@template_file))
-    end
-
-    def clean_other_files(except)
-      files_to_delete = Dir.glob(@output_directory + '**/*') - except.map(&:to_s)
-      FileUtils.rm_rf(files_to_delete)
     end
 
     def self.convert_links_to_html!(markdown)
