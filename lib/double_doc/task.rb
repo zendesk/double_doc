@@ -93,7 +93,7 @@ module DoubleDoc
               html_files = Dir.glob(Pathname.new(dir) + '*.html')
 
               `git add .`
-              `git commit -m 'Updated documentation'`
+              `git commit -n -m 'Updated documentation'`
               `git checkout gh-pages`
               `git pull origin gh-pages`
               `cp #{dir}/* .`
@@ -103,7 +103,7 @@ module DoubleDoc
                 warn("You should probably generate an index.html")
               end
               `git add .`
-              `git commit -m 'Updated Github Pages'`
+              `git commit -n -m 'Updated Github Pages'`
               `git push origin gh-pages`
               `git co #{git_branch}`
             end
