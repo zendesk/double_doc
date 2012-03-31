@@ -23,7 +23,8 @@ module DoubleDoc
       generated_files = [@output_directory + File.basename(@stylesheet)]
 
       @sources.each do |src|
-        dst = @output_directory + File.basename(src).sub(/\.md$/, '.html')
+        path = File.basename(src).sub(/\.md$/, '.html')
+        dst = @output_directory + path
         puts "#{src} -> #{dst}"
         FileUtils.mkdir_p(File.dirname(dst))
         File.open(dst, 'w') do |out|
@@ -34,7 +35,8 @@ module DoubleDoc
             :title         => @title,
             :body          => body,
             :css           => File.basename(@stylesheet),
-            :sitemap       => sitemap
+            :sitemap       => sitemap,
+            :path          => path
           )
           out.write(html)
         end

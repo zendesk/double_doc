@@ -16,7 +16,7 @@
         <% sitemap.each do |item| %>
           <li>
             <a class="source" href="<%= item.href %>"><%= item.title %></a>
-            <% if item.children.any? %>
+            <% if item.path == path && item.children.any? %>
               <ul>
                 <% item.children.each do |child| %>
                   <li><a href="<%= child.href %>"><%= child.title %></a></li>
