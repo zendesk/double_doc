@@ -23,14 +23,26 @@ module DoubleDoc
       generated_files = [@output_directory + File.basename(@stylesheet)]
 
       @sources.each do |src|
-        path = File.basename(src).sub(/\.md$/, '.html')
+        from_markdown = src.to_s =~ /\.md$/
+        if from_markdown
+          path = File.basename(src).sub(/\.md$/, '.html')
+        else
+          path = File.basename(src)
+        end
+
         dst = @output_directory + path
         puts "#{src} -> #{dst}"
         FileUtils.mkdir_p(File.dirname(dst))
-        File.open(dst, 'w') do |out|
-          markdown = self.class.convert_links_to_html!(File.new(src).read)
 
+        if from_markdown
+          markdown = self.class.convert_links_to_html!(File.new(src).read)
           body = @html_renderer.render(markdown)
+        else
+          body = File.new(src).read
+        end
+
+        File.open(dst, 'w') do |out|
+
           html = template.result(
             :title         => @title,
             :body          => body,

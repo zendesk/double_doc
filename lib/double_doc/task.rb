@@ -64,9 +64,17 @@ module DoubleDoc
         sources.each do |src|
           dst = md_dst + File.basename(src)
           puts "#{src} -> #{dst}"
-          File.open(dst, 'w') do |out|
-            out.write(import_handler.resolve_imports(File.new(src)))
+
+          if src.to_s =~ /\.md$/
+            body = import_handler.resolve_imports(File.new(src))
+          else
+            body = File.new(src).read
           end
+
+          File.open(dst, 'w') do |out|
+            out.write(body)
+          end
+
           generated_md_files << dst
         end
 
