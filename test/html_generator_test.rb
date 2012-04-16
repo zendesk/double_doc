@@ -76,7 +76,7 @@ describe "the html generator" do
     it "should skip specified filed" do
       generator = DoubleDoc::HtmlGenerator.new(@input_files, {
         :html_destination => @destination,
-        :exclude_from_navigation => [@input_file_two]
+        :exclude_from_navigation => ['file_two.html']
       })
       generator.generate
 

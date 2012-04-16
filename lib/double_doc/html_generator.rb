@@ -63,10 +63,11 @@ module DoubleDoc
 
       @sitemap = []
 
-      navigation_sources = @sources - @exclude_from_navigation
-
-      navigation_sources.each do |src|
+      @sources.each do |src|
         path = File.basename(src).sub(/\.md$/, '.html')
+
+        next if @exclude_from_navigation.include?(path)
+
         lines = File.readlines(src)
 
         item = nil
