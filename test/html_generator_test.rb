@@ -43,5 +43,48 @@ describe "the html generator" do
       output.must_match(/<a href="params.html\?foo=bar">params<\/a>/)
       output.must_match(/<a href="params.html#foo-bar">params<\/a>/)
     end
+
   end
+
+  describe "navigation" do
+    before do
+      @input_file_one = @root + 'source/file_one.md'
+      File.open(@input_file_one, 'w') do |f|
+        f.puts "## Title One"
+      end
+
+      @input_file_two = @root + 'source/file_two.md'
+      File.open(@input_file_two, 'w') do |f|
+        f.puts "## Title Two"
+      end
+
+      @input_files = [@input_file_one, @input_file_two]
+    end
+
+    it "should generate links for each page in the navigation area" do
+      generator = DoubleDoc::HtmlGenerator.new(@input_files, {
+        :html_destination => @destination
+      })
+      generator.generate
+
+      output = File.read(@destination + 'file_one.html')
+
+      output.must_match(/<li>\s*<a class="source" href="file_one.html">Title One<\/a>\s*<\/li>/)
+      output.must_match(/<li>\s*<a class="source" href="file_two.html">Title Two<\/a>\s*<\/li>/)
+    end
+
+    it "should skip specified filed" do
+      generator = DoubleDoc::HtmlGenerator.new(@input_files, {
+        :html_destination => @destination,
+        :exclude_from_navigation => [@input_file_two]
+      })
+      generator.generate
+
+      output = File.read(@destination + 'file_one.html')
+
+      output.must_match(/<li>\s*<a class="source" href="file_one.html">Title One<\/a>\s*<\/li>/)
+      output.wont_match(/<li>\s*<a class="source" href="file_two.html">Title Two<\/a>\s*<\/li>/)
+    end
+  end
+
 end

@@ -14,6 +14,7 @@ module DoubleDoc
       @html_renderer = options[:html_renderer] || HtmlRenderer
       @stylesheet = options[:html_css] || DEFAULT_CSS
       @title = options[:title] || 'Documentation'
+      @exclude_from_navigation = options[:exclude_from_navigation] || []
     end
 
     def generate
@@ -62,7 +63,9 @@ module DoubleDoc
 
       @sitemap = []
 
-      @sources.each do |src|
+      navigation_sources = @sources - @exclude_from_navigation
+
+      navigation_sources.each do |src|
         path = File.basename(src).sub(/\.md$/, '.html')
         lines = File.readlines(src)
 
