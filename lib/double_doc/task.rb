@@ -113,7 +113,7 @@ module DoubleDoc
               `git add .`
               `git commit -n -m 'Updated Github Pages'`
               `git push origin gh-pages`
-              `git co #{git_branch}`
+              `git checkout #{git_branch}`
             end
           end
         end
