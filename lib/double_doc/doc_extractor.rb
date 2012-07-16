@@ -1,7 +1,8 @@
 module DoubleDoc
   class DocExtractor
     TYPES = {
-      'rb' => /\s*##\s?(.*)$/
+      'rb' => /\s*##\s?(.*)$/,
+      'js' => %r{\s*///\s?(.*)$}
       }.freeze
 
     def self.extract(source, options = {})
