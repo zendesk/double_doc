@@ -17,6 +17,13 @@ DoubleDoc::Task.new(:doc,
   :html_destination => 'site'
 )
 
+task :setup_bundle_fixtures do
+  Bundler.with_clean_env do
+    system("bundle install --gemfile=test/fixtures/Gemfile --local")
+  end
+end
+
+task :test => [:setup_bundle_fixtures]
 task :default => [:test]
 
 desc 'test release and publish'
