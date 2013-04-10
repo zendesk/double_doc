@@ -9,10 +9,13 @@ module DoubleDoc
       @root = Pathname.new(root)
       @load_paths = [@root]
 
-      gemfile = @root + "Gemfile"
-
       if options[:gemfile]
-        raise LoadError, "missing Gemfile inside #{@root}" unless gemfile.exist?
+        gemfile = @root + "Gemfile"
+
+        unless gemfile.exist?
+          raise LoadError, "missing Gemfile inside #{@root}"
+        end
+
         @load_paths.concat(load_paths_from_gemfile(gemfile))
       end
 
