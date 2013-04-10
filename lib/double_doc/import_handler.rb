@@ -13,6 +13,7 @@ module DoubleDoc
         ENV["BUNDLE_GEMFILE"], orig_gemfile = gemfile.to_s, ENV["BUNDLE_GEMFILE"]
 
         puts "Loading paths from #{gemfile}"
+
         defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
         defn.validate_ruby!
         defn.resolve_with_cache!
