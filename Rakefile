@@ -19,7 +19,7 @@ DoubleDoc::Task.new(:doc,
 
 task :setup_bundle_fixtures do
   Bundler.with_clean_env do
-    system("bundle install --gemfile=test/fixtures/Gemfile --local")
+    system("yes | bundle install --gemfile=test/fixtures/Gemfile --local")
   end
 end
 
