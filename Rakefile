@@ -19,7 +19,7 @@ DoubleDoc::Task.new(:doc,
 
 task :setup_bundle_fixtures do
   unless File.exist?(Bundler.root.join("test/fixtures/Gemfile.lock"))
-    fail("Please run \"bundle install --gemfile=test/fixtures/Gemfile --local\" before running rake")
+    fail("Please run \"bundle install --gemfile=test/fixtures/Gemfile\" before running rake")
   end
 end
 

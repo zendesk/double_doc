@@ -4,4 +4,4 @@ rvm:
 branches:
   except:
     - gh-pages
-before_script: bundle install --gemfile=test/fixtures/Gemfile --local
+before_script: bundle install --gemfile=test/fixtures/Gemfile
