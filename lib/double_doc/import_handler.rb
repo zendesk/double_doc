@@ -3,8 +3,35 @@ require 'double_doc/doc_extractor'
 
 module DoubleDoc
   class ImportHandler
-    def initialize(root)
+    def initialize(root, options = {})
       @root = Pathname.new(root)
+      @load_paths = [@root]
+
+      gemfile = @root + "Gemfile"
+
+      if options[:gemfile] && gemfile.exist?
+        ENV["BUNDLE_GEMFILE"], orig_gemfile = gemfile.to_s, ENV["BUNDLE_GEMFILE"]
+
+        puts "Loading paths from #{gemfile}"
+        defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
+        defn.validate_ruby!
+
+        rubygems = defn.sources.detect {|s| s.is_a?(Bundler::Source::Rubygems)}
+
+        if rubygems
+          # Reset Rubygems
+          rubygems.cached!
+          rubygems.instance_variable_set(:@specs, nil)
+        end
+
+        @load_paths.concat(defn.specs.inject([]) do |paths, spec|
+          spec_paths = spec.load_paths.map {|p| Pathname.new(p)}
+          paths.concat(spec_paths)
+        end)
+
+        ENV["BUNDLE_GEMFILE"] = orig_gemfile
+      end
+
       @docs = {}
     end
 
@@ -40,7 +67,15 @@ module DoubleDoc
     def get_doc(path)
       return @docs[path] if @docs[path]
 
-      file = File.new(@root + path)
+      load_path = @load_paths.detect do |load_path|
+        (load_path + path).exist?
+      end
+
+      unless load_path
+        raise LoadError, "No such file or directory: #{path}"
+      end
+
+      file = File.new(load_path + path)
 
       if path =~ /\.md$/
         @docs[path] = resolve_imports(file)
