@@ -11,20 +11,9 @@ module DoubleDoc
 
       gemfile = @root + "Gemfile"
 
-      if options[:gemfile] && gemfile.exist?
-        ENV["BUNDLE_GEMFILE"], orig_gemfile = gemfile.to_s, ENV["BUNDLE_GEMFILE"]
-
-        puts "Loading paths from #{gemfile}"
-
-        defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
-        defn.validate_ruby!
-        defn.resolve_with_cache!
-
-        defn.specs.each do |spec|
-          @load_paths.concat(spec.load_paths.map {|p| Pathname.new(p)})
-        end
-
-        ENV["BUNDLE_GEMFILE"] = orig_gemfile
+      if options[:gemfile]
+        raise LoadError, "missing Gemfile inside #{@root}" unless gemfile.exist?
+        @load_paths.concat(load_paths_from_gemfile(gemfile))
       end
 
       @docs = {}
@@ -44,6 +33,20 @@ module DoubleDoc
     end
 
     protected
+
+    def load_paths_from_gemfile(gemfile)
+      with_gemfile(gemfile) do
+        puts "Loading paths from #{gemfile}"
+
+        defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
+        defn.validate_ruby!
+        defn.resolve_with_cache!
+
+        defn.specs.inject([]) do |paths, spec|
+          paths.concat(spec.load_paths.map {|p| Pathname.new(p)})
+        end
+      end
+    end
 
     def resolve_imports_from_lines(lines)
       doc = []
@@ -81,6 +84,13 @@ module DoubleDoc
       end
 
       File.new(load_path + path)
+    end
+
+    def with_gemfile(gemfile)
+      ENV["BUNDLE_GEMFILE"], orig_gemfile = gemfile.to_s, ENV["BUNDLE_GEMFILE"]
+      yield
+    ensure
+      ENV["BUNDLE_GEMFILE"] = orig_gemfile
     end
   end
 end

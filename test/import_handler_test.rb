@@ -5,7 +5,7 @@ describe "import handler" do
     DoubleDoc::ImportHandler.new(root, options)
   end
 
-  before do
+  after do
     ENV["BUNDLE_GEMFILE"] = File.join(File.expand_path(File.dirname(__FILE__)), "..", "Gemfile")
   end
 
@@ -14,11 +14,10 @@ describe "import handler" do
     let(:options) {{ :gemfile => true }}
 
     describe "rubygems" do
-      let(:root) { Bundler.root }
-
       describe "load_paths" do
         it "should add Gemfile load paths" do
-          subject.load_paths.wont_equal [subject.root]
+          subject.load_paths.must_include subject.root
+          subject.load_paths.size.must_be :>, 1
         end
       end
 
