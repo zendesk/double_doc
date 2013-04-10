@@ -13,6 +13,16 @@ describe "import handler" do
     let(:root) { Bundler.root }
     let(:options) {{ :gemfile => true }}
 
+    describe "when root has no tmpfile" do
+      let(:root) { Bundler.root + "lib" }
+
+      describe "initialization" do
+        it "should raise" do
+          lambda { subject }.must_raise LoadError
+        end
+      end
+    end
+
     describe "rubygems" do
       describe "load_paths" do
         it "should add Gemfile load paths" do
