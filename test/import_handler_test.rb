@@ -6,7 +6,7 @@ describe "import handler" do
   end
 
   after do
-    ENV["BUNDLE_GEMFILE"] = File.join(File.expand_path(File.dirname(__FILE__)), "..", "Gemfile")
+    ENV["BUNDLE_GEMFILE"] = Bundler.root.join("Gemfile").to_s
   end
 
   describe "with gemfile" do
