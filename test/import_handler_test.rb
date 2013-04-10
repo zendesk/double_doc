@@ -44,7 +44,7 @@ describe "import handler" do
         end
 
         it "should resolve file from git" do
-          subject.send(:find_file, "zendesk_api.rb").must_be_instance_of File
+          subject.send(:find_file, "mime-types.rb").must_be_instance_of File
         end
       end
     end

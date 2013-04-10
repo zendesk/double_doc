@@ -1,16 +1,9 @@
 GIT
-  remote: git@github.com:zendesk/zendesk_api_client_rb.git
-  revision: 1b6928945c91fea143f972d41ca1cdbefd9c2b64
-  ref: v0.3.2
+  remote: https://github.com/halostatue/mime-types.git
+  revision: b8d2208cc34e9b9ca6456182742dcb3bfc47daf6
+  ref: v1.22
   specs:
-    zendesk_api (0.3.2)
-      faraday (>= 0.8.0)
-      faraday_middleware (>= 0.8.7)
-      hashie
-      inflection
-      json
-      mime-types
-      multipart-post
+    mime-types (1.20.1)
 
 PATH
   remote: /Users/stevendavidovitz/src/personal/double_doc
@@ -25,15 +18,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     erubis (2.7.0)
-    faraday (0.8.7)
-      multipart-post (~> 1.1)
-    faraday_middleware (0.9.0)
-      faraday (>= 0.7.4, < 0.9)
-    hashie (2.0.3)
-    inflection (1.0.0)
-    json (1.7.7)
-    mime-types (1.22)
-    multipart-post (1.2.0)
     posix-spawn (0.3.6)
     pygments.rb (0.4.2)
       posix-spawn (~> 0.3.6)
@@ -47,4 +31,4 @@ PLATFORMS
 
 DEPENDENCIES
   double_doc!
-  zendesk_api!
+  mime-types!
