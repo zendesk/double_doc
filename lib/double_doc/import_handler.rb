@@ -15,14 +15,7 @@ module DoubleDoc
         puts "Loading paths from #{gemfile}"
         defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
         defn.validate_ruby!
-
-        rubygems = defn.sources.detect {|s| s.is_a?(Bundler::Source::Rubygems)}
-
-        if rubygems
-          # Reset Rubygems
-          rubygems.cached!
-          rubygems.instance_variable_set(:@specs, nil)
-        end
+        defn.resolve_with_cache!
 
         @load_paths.concat(defn.specs.inject([]) do |paths, spec|
           spec_paths = spec.load_paths.map {|p| Pathname.new(p)}
