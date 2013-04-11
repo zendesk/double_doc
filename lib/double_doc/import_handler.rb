@@ -3,8 +3,22 @@ require 'double_doc/doc_extractor'
 
 module DoubleDoc
   class ImportHandler
-    def initialize(root)
+    attr_reader :root, :load_paths
+
+    def initialize(root, options = {})
       @root = Pathname.new(root)
+      @load_paths = [@root]
+
+      if options[:gemfile]
+        gemfile = @root + "Gemfile"
+
+        unless gemfile.exist?
+          raise LoadError, "missing Gemfile inside #{@root}"
+        end
+
+        @load_paths.concat(load_paths_from_gemfile(gemfile))
+      end
+
       @docs = {}
     end
 
@@ -23,6 +37,20 @@ module DoubleDoc
 
     protected
 
+    def load_paths_from_gemfile(gemfile)
+      with_gemfile(gemfile) do
+        puts "Loading paths from #{gemfile}"
+
+        defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
+        defn.validate_ruby!
+        defn.resolve_with_cache!
+
+        defn.specs.inject([]) do |paths, spec|
+          paths.concat(spec.load_paths.map {|p| Pathname.new(p)})
+        end
+      end
+    end
+
     def resolve_imports_from_lines(lines)
       doc = []
 
@@ -40,13 +68,32 @@ module DoubleDoc
     def get_doc(path)
       return @docs[path] if @docs[path]
 
-      file = File.new(@root + path)
+      file = find_file(path)
 
       if path =~ /\.md$/
         @docs[path] = resolve_imports(file)
       else
         @docs[path] = resolve_imports(DocExtractor.extract(file))
       end
+    end
+
+    def find_file(path)
+      load_path = @load_paths.detect do |load_path|
+        (load_path + path).exist?
+      end
+
+      unless load_path
+        raise LoadError, "No such file or directory: #{path}"
+      end
+
+      File.new(load_path + path)
+    end
+
+    def with_gemfile(gemfile)
+      ENV["BUNDLE_GEMFILE"], orig_gemfile = gemfile.to_s, ENV["BUNDLE_GEMFILE"]
+      yield
+    ensure
+      ENV["BUNDLE_GEMFILE"] = orig_gemfile
     end
   end
 end

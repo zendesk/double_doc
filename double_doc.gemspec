@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = "Documentation right where you want it"
   s.description = "A simple framework for writing and generating beautiful documentation for your code"
 
-  s.files         = Dir.glob("{lib,templates}/**/*") + ["README.md"]
+  s.files         = Dir.glob("{lib,templates}/**/*") + ["readme.md"]
   s.test_files    = Dir.glob("test/**/*")
   s.require_paths = ["lib"]
 
