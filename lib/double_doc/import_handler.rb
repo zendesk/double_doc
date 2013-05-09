@@ -16,7 +16,12 @@ module DoubleDoc
           raise LoadError, "missing Gemfile inside #{@root}"
         end
 
-        @load_paths.concat(load_paths_from_gemfile(gemfile))
+        begin
+          @load_paths.concat(load_paths_from_gemfile(gemfile))
+        rescue => e
+          puts "Could not load paths from Gemfile; please make sure you've run bundle install with the correct gemset."
+          raise e
+        end
       end
 
       @docs = {}
