@@ -14,7 +14,7 @@
       </div>
       <ul id="sections">
           <li>
-            <a class="source" href="README.html">DoubleDoc 1.2</a>
+            <a class="source" href="README.html">DoubleDoc 1.3</a>
               <ul>
                   <li><a href="README.html#documentation-format">Documentation Format</a></li>
                   <li><a href="README.html#rake-task">Rake Task</a></li>
@@ -27,7 +27,7 @@
       </ul>
     </div>
     <div id="content">
-      <h2 id="doubledoc-1.2">DoubleDoc 1.2</h2>
+      <h2 id="doubledoc-1.3">DoubleDoc 1.3</h2>
 <p>One of the challenges you face when writing public documention for code or APIs, is that you have to remember to update the documentation
 when ever you change the API. The main reason why this is a problem is that very often the documentation lives very for from your code.</p>
 
@@ -38,7 +38,7 @@ when ever you change the API. The main reason why this is a problem is that very
 <p>This document was generated using DoubleDoc, and the source of this project is a great source for inspiration for how to use DoubleDoc.</p>
 <h3 id="documentation-format">Documentation Format</h3>
 <p>You write your documentation in markdown right in your source code files by double commenting it:</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
 
   <span class="c1">## ```js</span>
   <span class="c1">## {</span>
@@ -64,9 +64,7 @@ when ever you change the API. The main reason why this is a problem is that very
     <span class="n">render</span> <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</pre>
-</div>
-
+</pre></div>
 <p>You would then write a markdown document about your User API:</p>
 <pre>## Users
 You can acces users in our system by using our REST API, blah blah blah...
@@ -92,14 +90,12 @@ You can acces users in our system by using our REST API, blah blah blah...
 tell DoubleDoc what the input files are, and where you want the output to go.</p>
 <div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;double_doc&#39;</span>
 
-<span class="no">DoubleDoc</span><span class="o">::</span><span class="no">Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span>
+<span class="ss">DoubleDoc</span><span class="p">:</span><span class="ss">:Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span>
   <span class="ss">:sources</span>          <span class="o">=&gt;</span> <span class="s1">&#39;doc/source/*.md&#39;</span><span class="p">,</span>
   <span class="ss">:md_destination</span>   <span class="o">=&gt;</span> <span class="s1">&#39;doc/generated&#39;</span><span class="p">,</span>
   <span class="ss">:html_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;site&#39;</span>
 <span class="p">)</span>
-</pre>
-</div>
-
+</pre></div>
 <p>The available options are:</p>
 
 <table><thead>
@@ -141,10 +137,8 @@ tell DoubleDoc what the input files are, and where you want the output to go.</p
 <p>If you just want to use double doc to generate your README.md for github, you should write your documentation in doc/README.md and put his in your Rakefile:</p>
 <div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;double_doc&#39;</span>
 
-<span class="no">DoubleDoc</span><span class="o">::</span><span class="no">Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span> <span class="ss">:sources</span> <span class="o">=&gt;</span> <span class="s1">&#39;doc/README.md&#39;</span><span class="p">,</span> <span class="ss">:md_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
-</pre>
-</div>
-
+<span class="ss">DoubleDoc</span><span class="p">:</span><span class="ss">:Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span> <span class="ss">:sources</span> <span class="o">=&gt;</span> <span class="s1">&#39;doc/README.md&#39;</span><span class="p">,</span> <span class="ss">:md_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
 <p>Then all you have to do is to run <code>rake doc</code>, and you will have a <code>readme.md</code> in the root of your project.</p>
 
 <p>If you have a gh-pages branch set up in your repository, you can event run <code>rake doc:publish</code> to generate html documentation and push it to your github pages.</p>
