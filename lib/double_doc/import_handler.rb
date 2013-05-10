@@ -1,5 +1,6 @@
 require 'pathname'
 require 'double_doc/doc_extractor'
+require 'bundler'
 
 module DoubleDoc
   class ImportHandler
