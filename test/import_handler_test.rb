@@ -44,17 +44,13 @@ describe "import handler" do
       end
     end
 
-    describe "path, git" do
-      let(:root) { File.join(File.expand_path(File.dirname(__FILE__)), "fixtures") }
+    describe "find_file" do
+      it "should resolve files from path" do
+        subject.send(:find_file, "double_doc.rb").must_be_instance_of File
+      end
 
-      describe "find_file" do
-        it "should resolve files from path" do
-          subject.send(:find_file, "double_doc.rb").must_be_instance_of File
-        end
-
-        it "should resolve file from git" do
-          subject.send(:find_file, "mime-types.rb").must_be_instance_of File
-        end
+      it "should resolve file from git" do
+        subject.send(:find_file, "mime-types.rb").must_be_instance_of File
       end
     end
   end
