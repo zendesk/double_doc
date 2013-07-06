@@ -10,11 +10,13 @@ module DoubleDoc
       @root = Pathname.new(root)
       @load_paths = [@root]
 
-      begin
-        @load_paths.concat(load_paths_from_gemfile(@root))
-      rescue => e
-        puts "Could not load paths from Gemfile; please make sure you've run bundle install with the correct gemset."
-        raise e
+      if options[:gemfile]
+        begin
+          @load_paths.concat(load_paths_from_gemfile(@root))
+        rescue => e
+          puts "Could not load paths from Gemfile; please make sure you've run bundle install with the correct gemset."
+          raise e
+        end
       end
 
       @docs = {}
