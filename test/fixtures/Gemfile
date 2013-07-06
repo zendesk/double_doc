@@ -1,4 +1,0 @@
-source "https://rubygems.org"
-
-gem "double_doc", :path => File.join(File.expand_path(File.dirname(__FILE__)), "..", "..")
-gem "mime-types", :git => "https://github.com/halostatue/mime-types.git", :ref => "v1.22"
