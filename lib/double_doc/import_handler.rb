@@ -12,7 +12,7 @@ module DoubleDoc
 
       if options[:gemfile]
         begin
-          @load_paths.concat(load_paths_from_gemfile(@root))
+          @load_paths.concat(load_paths_from_gemfile(Bundler.root))
         rescue => e
           puts "Could not load paths from Gemfile; please make sure you've run bundle install with the correct gemset."
           raise e
