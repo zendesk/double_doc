@@ -11,14 +11,8 @@ module DoubleDoc
       @load_paths = [@root]
 
       if options[:gemfile]
-        gemfile = @root + "Gemfile"
-
-        unless gemfile.exist?
-          raise LoadError, "missing Gemfile inside #{@root}"
-        end
-
         begin
-          @load_paths.concat(load_paths_from_gemfile(gemfile))
+          @load_paths.concat(load_paths_from_gemfile(Bundler.root))
         rescue => e
           puts "Could not load paths from Gemfile; please make sure you've run bundle install with the correct gemset."
           raise e
@@ -43,11 +37,17 @@ module DoubleDoc
 
     protected
 
-    def load_paths_from_gemfile(gemfile)
+    def load_paths_from_gemfile(root)
+      gemfile = root + "Gemfile"
+
+      unless gemfile.exist?
+        raise LoadError, "missing Gemfile inside #{root}"
+      end
+
       with_gemfile(gemfile) do
         puts "Loading paths from #{gemfile}"
 
-        defn = Bundler::Definition.build(gemfile, @root + "Gemfile.lock", nil)
+        defn = Bundler::Definition.build(gemfile, root + "Gemfile.lock", nil)
         defn.validate_ruby!
         defn.resolve_with_cache!
 
