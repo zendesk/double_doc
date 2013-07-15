@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentaion</title>
+    <link rel="stylesheet" href="screen.css">
+  </head>
+  <body>
+    <div id="nav">
+      <div id="header">
+        <a href="#" id="logo">API Documentaion</a>
+      </div>
+      <ul id="sections">
+          <li>
+            <a class="source" href="readme.html">DoubleDoc 2.0</a>
+              <ul>
+                  <li><a href="readme.html#documentation-format">Documentation Format</a></li>
+                  <li><a href="readme.html#rake-task">Rake Task</a></li>
+                  <li><a href="readme.html#notes">Notes</a></li>
+                  <li><a href="readme.html#todo">TODO</a></li>
+                  <li><a href="readme.html#license">License</a></li>
+              </ul>
+          </li>
+
+      </ul>
+    </div>
+    <div id="content">
+      <h2 id="doubledoc-2.0">DoubleDoc 2.0</h2>
+<p>One of the challenges you face when writing public documention for code or APIs, is that you have to remember to update the documentation
+when ever you change the API. The main reason why this is a problem is that very often the documentation lives very for from your code.</p>
+
+<p>This is the problem DoubleDoc tries to solve.</p>
+
+<p>DoubleDoc allows you to write the documentation right where your code is, and you can combine it all into a well structured document.</p>
+
+<p>This document was generated using DoubleDoc, and the source of this project is a great source for inspiration for how to use DoubleDoc.</p>
+<h3 id="documentation-format">Documentation Format</h3>
+<p>You write your documentation in markdown right in your source code files by double commenting it:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+
+  <span class="c1">## ```js</span>
+  <span class="c1">## {</span>
+  <span class="c1">##   &quot;id&quot;:   1,</span>
+  <span class="c1">##   &quot;name&quot;: &quot;Mick Staugaard&quot;</span>
+  <span class="c1">## }</span>
+  <span class="c1">## ```</span>
+  <span class="k">def</span> <span class="nf">as_json</span>
+    <span class="c1"># this comment will not be included in the documentation</span>
+    <span class="c1"># as it only has a single # character</span>
+    <span class="k">super</span><span class="p">(</span><span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="c1">## ### Getting a User</span>
+  <span class="c1">## `GET /users/{id}.json`</span>
+  <span class="c1">##</span>
+  <span class="c1">## #### Format</span>
+  <span class="c1">## @import app/models/user.rb</span>
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="n">render</span> <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+<p>You would then write a markdown document about your User API:</p>
+<pre>## Users
+You can acces users in our system by using our REST API, blah blah blah...
+
+@import app/controllers/users_controller.rb
+</pre>
+<p>And DoubleDoc will generate this markdown document for you:</p>
+<pre>## Users
+You can acces users in our system by using our REST API, blah blah blah...
+
+### Getting a User
+`GET /users/{id}.json`
+
+#### Format
+```js
+{
+  "id":   1,
+  "name": "Mick Staugaard"
+}
+```
+</pre><h3 id="rake-task">Rake Task</h3>
+<p>It is very easy to set up a rake task for generating your documentation. All you have to do is
+tell DoubleDoc what the input files are, and where you want the output to go.</p>
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;double_doc&#39;</span>
+
+<span class="ss">DoubleDoc</span><span class="p">:</span><span class="ss">:Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span>
+  <span class="ss">:sources</span>          <span class="o">=&gt;</span> <span class="s1">&#39;doc/source/*.md&#39;</span><span class="p">,</span>
+  <span class="ss">:md_destination</span>   <span class="o">=&gt;</span> <span class="s1">&#39;doc/generated&#39;</span><span class="p">,</span>
+  <span class="ss">:html_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;site&#39;</span>
+<span class="p">)</span>
+</pre></div>
+<p>The available options are:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>sources</strong></td>
+<td><strong>Required</strong>. This tells Double doc where to look for the source of the documentation. Can be either a string or an array of strings.</td>
+</tr>
+<tr>
+<td><strong>md_destination</strong></td>
+<td><strong>Required</strong>. This is the directory where you want the generated markdown files to go.</td>
+</tr>
+<tr>
+<td><strong>html_destination</strong></td>
+<td>If you want a pretty HTML version of your documentation, all you have to do is to say where you want it.</td>
+</tr>
+<tr>
+<td><strong>html_template</strong></td>
+<td>You can use your own custom ERB template for HTML rendering. Have a look in the one we ship with DoubleDoc for inspiration (templates/default.html.erb).</td>
+</tr>
+<tr>
+<td><strong>html_renderer</strong></td>
+<td>If you want full control of the HTML rendering you can use your own implementation. Defaults to <code>DoubleDoc::HtmlRenderer</code>.</td>
+</tr>
+<tr>
+<td><strong>html_css</strong></td>
+<td>You can use your own custom CSS document by specifying it&#39;s path here.</td>
+</tr>
+<tr>
+<td><strong>title</strong></td>
+<td>The title you want in the generated HTML. Defaults to &quot;Documentation&quot;.</td>
+</tr>
+</tbody></table>
+
+<p>If you just want to use double doc to generate your README.md for github, you should write your documentation in doc/README.md and put his in your Rakefile:</p>
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;double_doc&#39;</span>
+
+<span class="ss">DoubleDoc</span><span class="p">:</span><span class="ss">:Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:doc</span><span class="p">,</span> <span class="ss">:sources</span> <span class="o">=&gt;</span> <span class="s1">&#39;doc/README.md&#39;</span><span class="p">,</span> <span class="ss">:md_destination</span> <span class="o">=&gt;</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Then all you have to do is to run <code>rake doc</code>, and you will have a <code>readme.md</code> in the root of your project.</p>
+
+<p>If you have a gh-pages branch set up in your repository, you can event run <code>rake doc:publish</code> to generate html documentation and push it to your github pages.</p>
+<h3 id="notes">Notes</h3>
+<p>DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because if it&#39;s dependency on redcarpet.</p>
+
+<p><a href="http://travis-ci.org/staugaard/double_doc"><img src="https://secure.travis-ci.org/staugaard/double_doc.png?branch=master" alt="Build Status"></a></p>
+<h3 id="todo">TODO</h3>
+<ul>
+<li>Tests</li>
+<li>Support for directory structures</li>
+<li>Documentation for the Rake task</li>
+<li>Documentation for the Guard</li>
+<li>Add support for extracting documentation from JavaScript files</li>
+</ul>
+<h3 id="license">License</h3><h4 id="the-mit-license">The MIT License</h4>
+<p>Copyright © 2012 <a href="mailto:mick@staugaard.com">Mick Staugaard</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+    </div>
+  </body>
+</html>
