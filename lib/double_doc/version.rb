@@ -1,4 +1,4 @@
-## ## DoubleDoc 1.3
+## ## DoubleDoc 2.0
 module DoubleDoc
-  VERSION = "1.3.0"
+  VERSION = "2.0.0"
 end
