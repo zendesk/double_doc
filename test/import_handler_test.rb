@@ -16,7 +16,7 @@ describe "import handler" do
     describe "rubygems" do
       describe "load_paths" do
         it "should add Gemfile load paths" do
-          subject.load_paths.must_include subject.root
+          subject.load_paths.must_include root
           subject.load_paths.size.must_be :>, 1
         end
       end

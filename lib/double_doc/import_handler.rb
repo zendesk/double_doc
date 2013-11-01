@@ -4,11 +4,13 @@ require 'bundler'
 
 module DoubleDoc
   class ImportHandler
-    attr_reader :root, :load_paths
+    attr_reader :load_paths
 
-    def initialize(root, options = {})
-      @root = Pathname.new(root)
-      @load_paths = [@root]
+    def initialize(*roots)
+      options = roots.pop if roots.last.is_a?(Hash)
+      options ||= {}
+
+      @load_paths = roots.map {|root| Pathname.new(root)}
 
       if options[:gemfile]
         begin

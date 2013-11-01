@@ -57,7 +57,7 @@ module DoubleDoc
 
       desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation from #{sources.join(', ')}"
       generated_task = task(task_name => destinations) do |t, args|
-        import_handler = DoubleDoc::ImportHandler.new(options[:root] || Rake.original_dir, options.fetch(:import, {}))
+        import_handler = DoubleDoc::ImportHandler.new(*options[:root] || Rake.original_dir, options.fetch(:import, {}))
 
         generated_md_files = []
 
