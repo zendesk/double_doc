@@ -48,16 +48,25 @@ module DoubleDoc
     def initialize(task_name, options)
       md_dst   = Pathname.new(options[:md_destination])
       html_dst = Pathname.new(options[:html_destination]) if options[:html_destination]
-      sources  = FileList[*options[:sources]].uniq
 
       destinations = [md_dst, html_dst].compact
       destinations.each do |dst|
         directory(dst.to_s)
       end
 
-      desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation from #{sources.join(', ')}"
+      desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation"
       generated_task = task(task_name => destinations) do |t, args|
         import_handler = DoubleDoc::ImportHandler.new(*options[:root] || Rake.original_dir, options.fetch(:import, {}))
+
+        sources = options[:sources].map do |source|
+          if source =~ /\*/
+            import_handler.load_paths.map do |path|
+              Dir.glob(File.join(path, source))
+            end
+          else
+            import_handler.find_file(source).path
+          end
+        end.flatten.uniq
 
         generated_md_files = []
 
@@ -68,7 +77,7 @@ module DoubleDoc
           if src.to_s =~ /\.md$/
             body = import_handler.resolve_imports(File.new(src))
           else
-            body = File.new(src).read
+            body = File.read(src)
           end
 
           File.open(dst, 'w') do |out|

@@ -37,6 +37,18 @@ module DoubleDoc
       end
     end
 
+    def find_file(path)
+      load_path = @load_paths.detect do |load_path|
+        (load_path + path).exist?
+      end
+
+      unless load_path
+        raise LoadError, "No such file or directory: #{path}"
+      end
+
+      File.new(load_path + path)
+    end
+
     protected
 
     def load_paths_from_gemfile(root)
@@ -83,18 +95,6 @@ module DoubleDoc
       else
         @docs[path] = resolve_imports(DocExtractor.extract(file))
       end
-    end
-
-    def find_file(path)
-      load_path = @load_paths.detect do |load_path|
-        (load_path + path).exist?
-      end
-
-      unless load_path
-        raise LoadError, "No such file or directory: #{path}"
-      end
-
-      File.new(load_path + path)
     end
 
     def with_gemfile(gemfile)
