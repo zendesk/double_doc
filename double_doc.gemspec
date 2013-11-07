@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.test_files    = Dir.glob("test/**/*")
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "guard"
+  s.add_development_dependency "guard", "~> 1.6"
   s.add_development_dependency "minitest"
 
   s.add_runtime_dependency "rake"

@@ -4,11 +4,13 @@ require 'bundler'
 
 module DoubleDoc
   class ImportHandler
-    attr_reader :root, :load_paths
+    attr_reader :load_paths
 
-    def initialize(root, options = {})
-      @root = Pathname.new(root)
-      @load_paths = [@root]
+    def initialize(*roots)
+      options = roots.pop if roots.last.is_a?(Hash)
+      options ||= {}
+
+      @load_paths = roots.map {|root| Pathname.new(root)}
 
       if options[:gemfile]
         begin
@@ -33,6 +35,18 @@ module DoubleDoc
       else
         raise "can't extract docs from #{source}"
       end
+    end
+
+    def find_file(path)
+      load_path = @load_paths.detect do |load_path|
+        (load_path + path).exist?
+      end
+
+      unless load_path
+        raise LoadError, "No such file or directory: #{path}"
+      end
+
+      File.new(load_path + path)
     end
 
     protected
@@ -81,18 +95,6 @@ module DoubleDoc
       else
         @docs[path] = resolve_imports(DocExtractor.extract(file))
       end
-    end
-
-    def find_file(path)
-      load_path = @load_paths.detect do |load_path|
-        (load_path + path).exist?
-      end
-
-      unless load_path
-        raise LoadError, "No such file or directory: #{path}"
-      end
-
-      File.new(load_path + path)
     end
 
     def with_gemfile(gemfile)
