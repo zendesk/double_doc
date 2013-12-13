@@ -11,7 +11,7 @@ Rake::TestTask.new(:test) do |test|
 end
 
 DoubleDoc::Task.new(:doc,
-  :title            => 'API Documentaion',
+  :title            => 'API Documentation',
   :sources          => 'doc/readme.md',
   :md_destination   => '.',
   :html_destination => 'site'
