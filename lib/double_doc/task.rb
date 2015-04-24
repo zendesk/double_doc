@@ -8,12 +8,13 @@ module DoubleDoc
 
   ## ### Rake Task
   ## It is very easy to set up a rake task for generating your documentation. All you have to do is
-  ## tell DoubleDoc what the input files are, and where you want the output to go.
+  ## tell DoubleDoc what the input files are, and where you want the output to go. In the example,
+  ## `double_doc` is picked to avoid conflicts with the `doc` rake task in rails.
   ##
   ## ```ruby
   ## require 'double_doc'
   ##
-  ## DoubleDoc::Task.new(:doc,
+  ## DoubleDoc::Task.new(:double_doc,
   ##   :sources          => 'doc/source/*.md',
   ##   :md_destination   => 'doc/generated',
   ##   :html_destination => 'site'
@@ -32,20 +33,22 @@ module DoubleDoc
   ## | __html_css__         | You can use your own custom CSS document by specifying it's path here.
   ## | __title__            | The title you want in the generated HTML. Defaults to "Documentation".
   ##
-  ## If you just want to use double doc to generate your README.md for github, you should write your documentation in doc/README.md and put his in your Rakefile:
+  ## If you just want to use double_doc to generate your README.md for github, you should write your documentation in doc/README.md and put this in your Rakefile:
   ##
   ## ```ruby
   ## require 'double_doc'
   ##
-  ## DoubleDoc::Task.new(:doc, :sources => 'doc/README.md', :md_destination => '.')
+  ## DoubleDoc::Task.new(:double_doc, :sources => 'doc/README.md', :md_destination => '.')
   ## ```
-  ## Then all you have to do is to run `rake doc`, and you will have a `readme.md` in the root of your project.
+  ##
+  ## Then all you have to do is to run `rake double_doc`, and you will have a `readme.md` in the root of your project.
   ##
   ## If you have a gh-pages branch set up in your repository, you can event run `rake doc:publish` to generate html documentation and push it to your github pages.
   class Task
     include Rake::DSL if defined?(Rake::DSL)
 
     def initialize(task_name, options)
+      md_srcs  = [options[:sources]].flatten
       md_dst   = Pathname.new(options[:md_destination])
       html_dst = Pathname.new(options[:html_destination]) if options[:html_destination]
 
@@ -62,7 +65,7 @@ module DoubleDoc
 
         import_handler = DoubleDoc::ImportHandler.new(*roots)
 
-        sources = options[:sources].map do |source|
+        sources = md_srcs.map do |source|
           if source =~ /\*/
             import_handler.load_paths.map do |path|
               Dir.glob(File.join(path, source))

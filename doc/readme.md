@@ -67,7 +67,7 @@ And DoubleDoc will generate this markdown document for you:
 @import lib/double_doc/task.rb
 
 ### Notes
-DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because if its dependency on redcarpet.
+DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because of its dependency on redcarpet.
 
 [![Build Status](https://secure.travis-ci.org/staugaard/double_doc.png?branch=master)](http://travis-ci.org/staugaard/double_doc)
 
