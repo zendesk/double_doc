@@ -1,5 +1,8 @@
 @import lib/double_doc/version.rb
 
+[![Build Status](https://travis-ci.org/zendesk/double_doc.svg?branch=master)](https://travis-ci.org/zendesk/double_doc)
+
+
 One of the challenges you face when writing public documention for code or APIs, is that you have to remember to update the documentation
 when ever you change the API. The main reason why this is a problem is that very often the documentation lives very for from your code.
 
@@ -45,17 +48,17 @@ You would then write a markdown document about your User API:
 
     ## Users
     You can acces users in our system by using our REST API, blah blah blah...
-    
+
     @@import app/controllers/users_controller.rb
 
 And DoubleDoc will generate this markdown document for you:
 
     ## Users
     You can acces users in our system by using our REST API, blah blah blah...
-    
+
     ### Getting a User
     `GET /users/{id}.json`
-    
+
     #### Format
     ```js
     {
@@ -68,8 +71,6 @@ And DoubleDoc will generate this markdown document for you:
 
 ### Notes
 DoubleDoc is tested as working on both ruby 1.8.7 and 1.9.3, but does not work on jruby because of its dependency on redcarpet.
-
-[![Build Status](https://secure.travis-ci.org/staugaard/double_doc.png?branch=master)](http://travis-ci.org/staugaard/double_doc)
 
 ### TODO
 @import doc/todo.md
