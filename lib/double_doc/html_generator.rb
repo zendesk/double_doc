@@ -14,6 +14,7 @@ module DoubleDoc
       @html_renderer = options[:html_renderer] || HtmlRenderer
       @stylesheet = options[:html_css] || DEFAULT_CSS
       @title = options[:title] || 'Documentation'
+      @quiet = options[:quiet] == true
       @exclude_from_navigation = options[:exclude_from_navigation] || []
     end
 
@@ -32,7 +33,7 @@ module DoubleDoc
         end
 
         dst = @output_directory + path
-        puts "#{src} -> #{dst}"
+        puts "#{src} -> #{dst}" unless @quiet
         FileUtils.mkdir_p(File.dirname(dst))
 
         if from_markdown

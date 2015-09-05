@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe "import handler" do
   subject do
-    roots = Array(root).push(options)
+    roots = Array(root).push(options.merge( :quiet => true ))
     DoubleDoc::ImportHandler.new(*roots)
   end
 
