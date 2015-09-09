@@ -10,7 +10,10 @@ describe "the html generator" do
     @output_file_name = @destination + 'input.html'
     Dir.mkdir(@root + 'source')
     Dir.mkdir(@destination)
-    @generator = DoubleDoc::HtmlGenerator.new([@input_file_name], { :html_destination => @destination })
+    @generator = DoubleDoc::HtmlGenerator.new([@input_file_name], {
+      :html_destination => @destination,
+      :quiet => true
+    })
   end
 
   after do
@@ -63,7 +66,8 @@ describe "the html generator" do
 
     it "should generate links for each page in the navigation area" do
       generator = DoubleDoc::HtmlGenerator.new(@input_files, {
-        :html_destination => @destination
+        :html_destination => @destination,
+        :quiet => true
       })
       generator.generate
 
@@ -76,7 +80,8 @@ describe "the html generator" do
     it "should skip specified filed" do
       generator = DoubleDoc::HtmlGenerator.new(@input_files, {
         :html_destination => @destination,
-        :exclude_from_navigation => ['file_two.html']
+        :exclude_from_navigation => ['file_two.html'],
+        :quiet => true
       })
       generator.generate
 

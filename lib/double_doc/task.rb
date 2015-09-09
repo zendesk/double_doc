@@ -1,8 +1,7 @@
 require 'rake'
 require 'pathname'
 require 'tmpdir'
-require 'double_doc/import_handler'
-require 'double_doc/html_generator'
+require 'double_doc/client'
 
 module DoubleDoc
 
@@ -48,7 +47,6 @@ module DoubleDoc
     include Rake::DSL if defined?(Rake::DSL)
 
     def initialize(task_name, options)
-      md_srcs  = [options[:sources]].flatten
       md_dst   = Pathname.new(options[:md_destination])
       html_dst = Pathname.new(options[:html_destination]) if options[:html_destination]
 
@@ -57,48 +55,14 @@ module DoubleDoc
         directory(dst.to_s)
       end
 
+      roots = Array(options[:root])
+      roots << Rake.original_dir if roots.empty?
+
       desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation"
       generated_task = task(task_name => destinations) do |t, args|
-        roots = Array(options[:root])
-        roots << Rake.original_dir if roots.empty?
-        roots << options.fetch(:import, {})
-
-        import_handler = DoubleDoc::ImportHandler.new(*roots)
-
-        sources = md_srcs.map do |source|
-          if source =~ /\*/
-            import_handler.load_paths.map do |path|
-              Dir.glob(File.join(path, source))
-            end
-          else
-            import_handler.find_file(source).path
-          end
-        end.flatten.uniq
-
-        generated_md_files = []
-
-        sources.each do |src|
-          dst = md_dst + File.basename(src)
-          puts "#{src} -> #{dst}"
-
-          if src.to_s =~ /\.md$/
-            body = import_handler.resolve_imports(File.new(src))
-          else
-            body = File.read(src)
-          end
-
-          File.open(dst, 'w') do |out|
-            out.write(body)
-          end
-
-          generated_md_files << dst
-        end
-
-        if html_dst || args[:html_destination]
-          html_generator = DoubleDoc::HtmlGenerator.new(generated_md_files, options.merge(args))
-          html_generator.generate
-        end
-
+        opts = args.merge(options.merge(:roots => roots))
+        client = DoubleDoc::Client.new(options[:sources], opts)
+        client.process
       end
 
       has_github_pages = !`git branch | grep 'gh-pages'`.empty? rescue false

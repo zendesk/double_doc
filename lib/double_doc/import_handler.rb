@@ -11,6 +11,7 @@ module DoubleDoc
       options ||= {}
 
       @load_paths = roots.map {|root| Pathname.new(root)}
+      @quiet = options[:quiet] == true
 
       if options[:gemfile]
         begin
@@ -59,7 +60,7 @@ module DoubleDoc
       end
 
       with_gemfile(gemfile) do
-        puts "Loading paths from #{gemfile}"
+        puts "Loading paths from #{gemfile}" unless @quiet
 
         defn = Bundler::Definition.build(gemfile, root + "Gemfile.lock", nil)
         defn.validate_ruby!
