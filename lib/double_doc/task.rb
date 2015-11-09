@@ -60,7 +60,7 @@ module DoubleDoc
 
       desc "Generate markdown #{html_dst ? 'and HTML ' : ''}DoubleDoc documentation"
       generated_task = task(task_name => destinations) do |t, args|
-        opts = args.merge(options.merge(:roots => roots))
+        opts = args.to_h.merge(options.merge(:roots => roots))
         client = DoubleDoc::Client.new(options[:sources], opts)
         client.process
       end
