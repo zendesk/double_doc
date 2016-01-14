@@ -6,6 +6,7 @@ describe "the doc extractor" do
     it "extracts documentation" do
       subject.must_match(/this line should be extracted/)
       subject.must_match(/this line should also be extracted/)
+      subject.must_match(/but this line should/)
     end
 
     it "doesn't extract regular comments" do
@@ -32,6 +33,8 @@ describe "the doc extractor" do
     ## this line should also be extracted
     ## this line should be concatenated to...\
     ## this one.
+    # puts "Bug##1 this line should not be extracted"
+## but this line should
 
     subject do
       DoubleDoc::DocExtractor.extract(File.new(__FILE__))
@@ -48,6 +51,8 @@ describe "the doc extractor" do
         /// this line should also be extracted
         /// this line should be concatenated to...\\
         /// this one.
+        // console.log('/// this line should not be extracted')
+/// but this line should
       EOS
       DoubleDoc::DocExtractor.extract(source, :type => 'js')
     end
