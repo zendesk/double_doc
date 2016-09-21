@@ -4,5 +4,5 @@ source "https://rubygems.org"
 gemspec
 
 group :test do
-  gem "mime-types", :git => "https://github.com/halostatue/mime-types.git", :ref => "v1.22"
+  gem "mime-types", :git => "https://github.com/mime-types/ruby-mime-types.git", :ref => "v1.22"
 end
