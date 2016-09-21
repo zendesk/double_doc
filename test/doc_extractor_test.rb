@@ -14,11 +14,15 @@ describe "the doc extractor" do
 
     it "doesn't add any extra new-lines" do
       subject.must_match(/^this/m)
-      subject.must_match(/extracted\n$/m)
+      subject.must_match(/this one.\n$/m)
     end
 
     it "adds an empty line between documentation sections" do
       subject.must_match(/extracted\n\nthis/m)
+    end
+
+    it "concatenates lines that end in a backslash" do
+      subject.must_match(/this line should be concatenated to...this one./)
     end
   end
 
@@ -26,6 +30,8 @@ describe "the doc extractor" do
     ## this line should be extracted
     # this line should not be extracted
     ## this line should also be extracted
+    ## this line should be concatenated to...\
+    ## this one.
 
     subject do
       DoubleDoc::DocExtractor.extract(File.new(__FILE__))
@@ -40,6 +46,8 @@ describe "the doc extractor" do
         /// this line should be extracted
         // this line should not be extracted
         /// this line should also be extracted
+        /// this line should be concatenated to...\\
+        /// this one.
       EOS
       DoubleDoc::DocExtractor.extract(source, :type => 'js')
     end
