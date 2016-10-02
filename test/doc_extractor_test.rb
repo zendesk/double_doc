@@ -14,7 +14,7 @@ describe "the doc extractor" do
 
     it "doesn't add any extra new-lines" do
       subject.must_match(/^this/m)
-      subject.must_match(/this one.\n$/m)
+      subject.must_match(/this one\.\n$/m)
     end
 
     it "adds an empty line between documentation sections" do
@@ -22,7 +22,7 @@ describe "the doc extractor" do
     end
 
     it "concatenates lines that end in a backslash" do
-      subject.must_match(/this line should be concatenated to...this one./)
+      subject.must_match(/this line should be concatenated to...this one\./)
     end
   end
 
