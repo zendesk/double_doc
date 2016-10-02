@@ -15,14 +15,14 @@ describe "import handler" do
     end
 
     it 'produces output at the md_destination' do
-      File.exists?(destination + '/readme.md').must_equal true
+      File.exist?(destination + '/readme.md').must_equal true
     end
 
     describe 'with a missing directory' do
       let(:destination) { Dir.mktmpdir + '/tmp' }
 
       it 'creates the directory' do
-        File.exists?(destination + '/readme.md').must_equal true
+        File.exist?(destination + '/readme.md').must_equal true
       end
     end
 
@@ -30,8 +30,8 @@ describe "import handler" do
       let(:sources) { %w(readme todo).map{|f| Bundler.root + "doc/#{f}.md" } }
 
       it 'processes all sources' do
-        File.exists?(destination + '/readme.md').must_equal true
-        File.exists?(destination + '/todo.md').must_equal true
+        File.exist?(destination + '/readme.md').must_equal true
+        File.exist?(destination + '/todo.md').must_equal true
       end
     end
 
@@ -44,7 +44,7 @@ describe "import handler" do
       } }
 
       it 'creates html files' do
-        File.exists?(destination + '/html/readme.html').must_equal true
+        File.exist?(destination + '/html/readme.html').must_equal true
       end
     end
   end
