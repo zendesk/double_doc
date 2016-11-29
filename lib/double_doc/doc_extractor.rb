@@ -1,8 +1,8 @@
 module DoubleDoc
   class DocExtractor
     TYPES = {
-      'rb' => /\s*##\s?(.*?)(\\?)$/,
-      'js' => %r{\s*///\s?(.*?)(\\?)$}
+      'rb' => /(^\s*|\s+)##\s?(?<documentation_line>.*?)(?<newline_marker>\\?)$/,
+      'js' => %r{(^\s*|\s+)///\s?(?<documentation_line>.*?)(?<newline_marker>\\?)$}
       }.freeze
 
     def self.extract(source, options = {})
@@ -35,13 +35,13 @@ module DoubleDoc
             doc << ''
             add_empty_line = false
           end
-          new_string = match[1].rstrip
+          new_string = match[:documentation_line].rstrip
           if append_to_previous
             doc[-1] << new_string
           else
             doc << new_string
           end
-          append_to_previous = !match[2].empty?
+          append_to_previous = !match[:newline_marker].empty?
         else
           add_empty_line = !doc.empty?
         end
