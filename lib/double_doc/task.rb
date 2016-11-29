@@ -6,17 +6,17 @@ require 'double_doc/client'
 module DoubleDoc
 
   ## ### Rake Task
-  ## It is very easy to set up a rake task for generating your documentation. All you have to do is
-  ## tell DoubleDoc what the input files are, and where you want the output to go. In the example,
-  ## `double_doc` is picked to avoid conflicts with the `doc` rake task in rails.
+  ## Generate documentation by telling DoubleDoc what the input files are, and where the output should go.
+  ## In the example, `double_doc` is picked to avoid conflicts with the `doc` rake task in rails.
   ##
   ## ```ruby
   ## require 'double_doc'
   ##
-  ## DoubleDoc::Task.new(:double_doc,
-  ##   :sources          => 'doc/source/*.md',
-  ##   :md_destination   => 'doc/generated',
-  ##   :html_destination => 'site'
+  ## DoubleDoc::Task.new(
+  ##   :double_doc,
+  ##   sources:          'doc/source/*.md',
+  ##   md_destination:   'doc/generated',
+  ##   html_destination: 'site'
   ## )
   ## ```
   ##
@@ -24,25 +24,24 @@ module DoubleDoc
   ##
   ## | name                 | Description
   ## | -------------------- | -----------
-  ## | __sources__          | __Required__. This tells Double doc where to look for the source of the documentation. Can be either a string or an array of strings.
-  ## | __md_destination__   | __Required__. This is the directory where you want the generated markdown files to go.
-  ## | __html_destination__ | If you want a pretty HTML version of your documentation, all you have to do is to say where you want it.
-  ## | __html_template__    | You can use your own custom ERB template for HTML rendering. Have a look in the one we ship with DoubleDoc for inspiration (templates/default.html.erb).
-  ## | __html_renderer__    | If you want full control of the HTML rendering you can use your own implementation. Defaults to `DoubleDoc::HtmlRenderer`.
-  ## | __html_css__         | You can use your own custom CSS document by specifying it's path here.
-  ## | __title__            | The title you want in the generated HTML. Defaults to "Documentation".
-  ##
-  ## If you just want to use double_doc to generate your README.md for github, you should write your documentation in doc/README.md and put this in your Rakefile:
+  ## | __sources__          | __Required__. Documentation source directory (string or array of strings).
+  ## | __md_destination__   | __Required__. Directory where the generated markdown files should go.
+  ## | __html_destination__ | Where a pretty HTML version of the documentation should go.
+  ## | __html_template__    | Custom ERB template for HTML rendering, see default template for inspiration (templates/default.html.erb).
+  ## | __html_renderer__    | Custom html rendered, defaults to `DoubleDoc::HtmlRenderer`.
+  ## | __html_css__         | Custom CSS document path.
+  ## | __title__            | Title for generated HTML, defaults to "Documentation".
+  ## To generate a README.md for github, write documentation in doc/README.md and put this in the Rakefile:
   ##
   ## ```ruby
   ## require 'double_doc'
   ##
-  ## DoubleDoc::Task.new(:double_doc, :sources => 'doc/README.md', :md_destination => '.')
+  ## DoubleDoc::Task.new(:double_doc, sources: 'doc/README.md', md_destination: '.')
   ## ```
   ##
-  ## Then all you have to do is to run `rake double_doc`, and you will have a `readme.md` in the root of your project.
+  ## Then run `rake double_doc`, which will generate a `readme.md` in the root of the project.
   ##
-  ## If you have a gh-pages branch set up in your repository, you can event run `rake doc:publish` to generate html documentation and push it to your github pages.
+  ## If a gh-pages branch exists, run `rake doc:publish` to generate html documentation and push it to your github pages.
   class Task
     include Rake::DSL if defined?(Rake::DSL)
 
@@ -80,6 +79,7 @@ module DoubleDoc
               generated_task.execute(:html_destination => dir)
               html_files = Dir.glob(Pathname.new(dir) + '*.html')
 
+              # FIXME: fail when something fails and don't just continue
               `git add .`
               `git commit -n -m 'Updated documentation'`
               `git checkout gh-pages`
