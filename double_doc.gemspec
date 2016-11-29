@@ -1,6 +1,4 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "double_doc/version"
+require "./lib/double_doc/version"
 
 Gem::Specification.new do |s|
   s.name        = "double_doc"
@@ -9,14 +7,13 @@ Gem::Specification.new do |s|
   s.email       = ["mick@staugaard.com"]
   s.homepage    = "http://staugaard.github.com/double_doc"
   s.summary     = "Documentation right where you want it"
-  s.description = "A simple framework for writing and generating beautiful documentation for your code"
+  s.description = "Write documentation with your code, to keep them in sync, ideal for public API docs."
 
-  s.files         = Dir.glob("{lib,templates}/**/*") + ["readme.md"]
-  s.test_files    = Dir.glob("test/**/*")
-  s.require_paths = ["lib"]
+  s.files       = Dir.glob("{lib,templates}/**/*") + ["readme.md"]
 
   s.add_development_dependency "guard", "~> 1.6"
-  s.add_development_dependency "minitest"
+  s.add_development_dependency "maxitest"
+  s.add_development_dependency "mime-types"
 
   s.add_runtime_dependency "rake"
   s.add_runtime_dependency "erubis"

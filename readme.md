@@ -67,7 +67,7 @@ In the example, `double_doc` is picked to avoid conflicts with the `doc` rake ta
 ```ruby
 require 'double_doc'
 
-DoubleDoc::Task.new(:double_doc,
+DoubleDoc::Task.new(
   :double_doc,
   sources:          'doc/source/*.md',
   md_destination:   'doc/generated',

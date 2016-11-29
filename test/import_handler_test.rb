@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative 'test_helper'
 
 describe "import handler" do
   subject do
@@ -34,7 +34,7 @@ describe "import handler" do
 
       describe "find_file" do
         it "should resolve files" do
-          subject.find_file("bundler.rb").must_be_instance_of File
+          subject.find_file("redcarpet.rb").must_be_instance_of File
         end
 
         it "should raise if unable to find file" do

@@ -3,7 +3,7 @@ module DoubleDoc
     TYPES = {
       'rb' => /(^\s*|\s+)##\s?(?<documentation_line>.*?)(?<newline_marker>\\?)$/,
       'js' => %r{(^\s*|\s+)///\s?(?<documentation_line>.*?)(?<newline_marker>\\?)$}
-      }.freeze
+    }.freeze
 
     def self.extract(source, options = {})
       case source
