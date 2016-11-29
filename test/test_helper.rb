@@ -1,4 +1,4 @@
-require "bundler"
-Bundler.require
+require "bundler/setup"
+require "maxitest/autorun"
 
-require "minitest/autorun"
+require "double_doc"

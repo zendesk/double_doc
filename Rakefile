@@ -1,23 +1,23 @@
-$LOAD_PATH.unshift 'lib'
+require "bundler/setup"
 require "bundler/gem_tasks"
 require 'double_doc/task'
 require 'rake/testtask'
 
-Rake::TestTask.new(:test) do |test|
-  test.libs   << 'lib'
-  test.libs   << 'test'
-  test.pattern = 'test/**/*_test.rb'
-  test.verbose = true
+Rake::TestTask.new(:test) do |t|
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+  t.warning = false # TODO: turn on and fix
 end
 
-DoubleDoc::Task.new(:doc,
+DoubleDoc::Task.new(
+  :doc,
   :title            => 'API Documentation',
   :sources          => 'doc/readme.md',
   :md_destination   => '.',
   :html_destination => 'site'
 )
 
-task :default => [:test]
+task default: [:test]
 
 desc 'test release and publish'
-task :release_and_publish => [:test, :release, 'doc:publish']
+task release_and_publish: [:test, :release, 'doc:publish']
