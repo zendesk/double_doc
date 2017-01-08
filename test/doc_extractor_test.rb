@@ -1,7 +1,6 @@
 require_relative 'test_helper'
 
 describe "the doc extractor" do
-
   def self.it_acts_like_an_extractor
     it "extracts documentation" do
       subject.must_match(/this line should be extracted/)
@@ -15,15 +14,11 @@ describe "the doc extractor" do
 
     it "doesn't add any extra new-lines" do
       subject.must_match(/^this/m)
-      subject.must_match(/this one\.\n$/m)
+      subject.must_match(/should\n$/m)
     end
 
     it "adds an empty line between documentation sections" do
       subject.must_match(/extracted\n\nthis/m)
-    end
-
-    it "concatenates lines that end in a backslash" do
-      subject.must_match(/this line should be concatenated to...this one\./)
     end
   end
 
@@ -31,8 +26,6 @@ describe "the doc extractor" do
     ## this line should be extracted
     # this line should not be extracted
     ## this line should also be extracted
-    ## this line should be concatenated to...\
-    ## this one.
     # puts "Bug##1 this line should not be extracted"
 ## but this line should
 
@@ -49,8 +42,6 @@ describe "the doc extractor" do
         /// this line should be extracted
         // this line should not be extracted
         /// this line should also be extracted
-        /// this line should be concatenated to...\\
-        /// this one.
         // console.log('/// this line should not be extracted')
 /// but this line should
       EOS
