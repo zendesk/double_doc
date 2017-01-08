@@ -28,20 +28,13 @@ module DoubleDoc
       extractor = TYPES[options[:type]]
 
       add_empty_line = false
-      append_to_previous = false
       lines.each do |line|
         if match = line.match(extractor)
           if add_empty_line
             doc << ''
             add_empty_line = false
           end
-          new_string = match[:documentation_line].rstrip
-          if append_to_previous
-            doc[-1] << new_string
-          else
-            doc << new_string
-          end
-          append_to_previous = !match[:newline_marker].empty?
+          doc << match[:documentation_line].rstrip
         else
           add_empty_line = !doc.empty?
         end
