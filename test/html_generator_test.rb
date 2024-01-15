@@ -42,9 +42,9 @@ describe "the html generator" do
 
     it "should convert .md links to .html links" do
       output = File.read(@output_file_name)
-      output.must_match(/<a href="other.html">the other file<\/a>/)
-      output.must_match(/<a href="params.html\?foo=bar">params<\/a>/)
-      output.must_match(/<a href="params.html#foo-bar">params<\/a>/)
+      _(output).must_match(/<a href="other.html">the other file<\/a>/)
+      _(output).must_match(/<a href="params.html\?foo=bar">params<\/a>/)
+      _(output).must_match(/<a href="params.html#foo-bar">params<\/a>/)
     end
 
   end
@@ -73,8 +73,8 @@ describe "the html generator" do
 
       output = File.read(@destination + 'file_one.html')
 
-      output.must_match(/<li>\s*<a class="source" href="file_one.html">Title One<\/a>\s*<\/li>/)
-      output.must_match(/<li>\s*<a class="source" href="file_two.html">Title Two<\/a>\s*<\/li>/)
+      _(output).must_match(/<li>\s*<a class="source" href="file_one.html">Title One<\/a>\s*<\/li>/)
+      _(output).must_match(/<li>\s*<a class="source" href="file_two.html">Title Two<\/a>\s*<\/li>/)
     end
 
     it "should skip specified filed" do
@@ -87,8 +87,8 @@ describe "the html generator" do
 
       output = File.read(@destination + 'file_one.html')
 
-      output.must_match(/<li>\s*<a class="source" href="file_one.html">Title One<\/a>\s*<\/li>/)
-      output.wont_match(/<li>\s*<a class="source" href="file_two.html">Title Two<\/a>\s*<\/li>/)
+      _(output).must_match(/<li>\s*<a class="source" href="file_one.html">Title One<\/a>\s*<\/li>/)
+      _(output).wont_match(/<li>\s*<a class="source" href="file_two.html">Title Two<\/a>\s*<\/li>/)
     end
   end
 
