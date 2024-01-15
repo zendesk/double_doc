@@ -1,6 +1,6 @@
 @import lib/double_doc/version.rb
 
-[![Build Status](https://travis-ci.org/zendesk/double_doc.svg?branch=master)](https://travis-ci.org/zendesk/double_doc)
+[![CI Status](https://github.com/zendesk/double_doc/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zendesk/double_doc/actions/workflows/ci.yml)
 
 <!-- only modify doc/readme.md and not Readme.md --> 
 
