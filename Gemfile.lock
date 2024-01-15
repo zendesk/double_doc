@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    double_doc (2.2.0)
+    double_doc (2.3.0)
       erubis
       pygments.rb (~> 2.0)
       rake
