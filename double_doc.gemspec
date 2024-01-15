@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "rake"
   s.add_runtime_dependency "erubis"
   s.add_runtime_dependency "redcarpet", "< 4"
-  s.add_runtime_dependency "pygments.rb", "~> 1.2"
+  s.add_runtime_dependency "pygments.rb", "~> 2.0"
 end
