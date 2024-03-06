@@ -99,8 +99,15 @@ Then run `rake double_doc`, which will generate a `readme.md` in the root of the
 If a gh-pages branch exists, run `rake doc:publish` to generate html documentation and push it to your github pages.
 
 ### Notes
- - Tested on ruby 2.0+
+ - Tested on ruby 3.0+
  - Does not work on jruby because of its dependency on redcarpet.
+
+### Release
+
+After merging your changes:
+1. Create a PR with a version bump and updated changelog.
+2. After that PR gets merged, create a new tag (by running `gem_push=no rake release` or via Github releases).
+3. This will trigger the publishing workflow—[approve it in Github Actions](https://github.com/zendesk/double_doc/actions/workflows/publish.yml)).
 
 ### TODO
 * Support for directory structures
