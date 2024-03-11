@@ -3,22 +3,22 @@ require_relative 'test_helper'
 describe "the doc extractor" do
   def self.it_acts_like_an_extractor
     it "extracts documentation" do
-      subject.must_match(/this line should be extracted/)
-      subject.must_match(/this line should also be extracted/)
-      subject.must_match(/but this line should/)
+      _(subject).must_match(/this line should be extracted/)
+      _(subject).must_match(/this line should also be extracted/)
+      _(subject).must_match(/but this line should/)
     end
 
     it "doesn't extract regular comments" do
-      subject.wont_match(/this line should not be extracted/)
+      _(subject).wont_match(/this line should not be extracted/)
     end
 
     it "doesn't add any extra new-lines" do
-      subject.must_match(/^this/m)
-      subject.must_match(/should\n$/m)
+      _(subject).must_match(/^this/m)
+      _(subject).must_match(/should\n$/m)
     end
 
     it "adds an empty line between documentation sections" do
-      subject.must_match(/extracted\n\nthis/m)
+      _(subject).must_match(/extracted\n\nthis/m)
     end
   end
 

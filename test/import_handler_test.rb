@@ -15,8 +15,8 @@ describe "import handler" do
     let(:options) {{}}
 
     it "finds files from either root" do
-      subject.find_file("double_doc.rb").must_be_instance_of File
-      subject.find_file("readme.md").must_be_instance_of File
+      _(subject.find_file("double_doc.rb")).must_be_instance_of File
+      _(subject.find_file("readme.md")).must_be_instance_of File
     end
   end
 
@@ -27,31 +27,29 @@ describe "import handler" do
     describe "rubygems" do
       describe "load_paths" do
         it "should add Gemfile load paths" do
-          subject.load_paths.must_include root
-          subject.load_paths.size.must_be :>, 1
+          _(subject.load_paths).must_include root
+          _(subject.load_paths.size).must_be :>, 1
         end
       end
 
       describe "find_file" do
         it "should resolve files" do
-          subject.find_file("redcarpet.rb").must_be_instance_of File
+          _(subject.find_file("redcarpet.rb")).must_be_instance_of File
         end
 
         it "should raise if unable to find file" do
-          lambda do
-            subject.find_file("nope.rb")
-          end.must_raise LoadError
+          _{ subject.find_file("nope.rb") }.must_raise LoadError
         end
       end
     end
 
     describe "find_file" do
       it "should resolve files from path" do
-        subject.find_file("double_doc.rb").must_be_instance_of File
+        _(subject.find_file("double_doc.rb")).must_be_instance_of File
       end
 
       it "should resolve file from git" do
-        subject.find_file("mime-types.rb").must_be_instance_of File
+        _(subject.find_file("mime-types.rb")).must_be_instance_of File
       end
     end
   end
