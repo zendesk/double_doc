@@ -102,12 +102,20 @@ If a gh-pages branch exists, run `rake doc:publish` to generate html documentati
  - Tested on ruby 3.0+
  - Does not work on jruby because of its dependency on redcarpet.
 
-### Release
+### Releasing a new version
+A new version is published to RubyGems.org every time a change to `version.rb` is pushed to the `main` branch.
+In short, follow these steps:
+1. Update `version.rb`,
+2. run `bundle lock` to update `Gemfile.lock`,
+3. merge this change into `main`, and
+4. look at [the action](https://github.com/zendesk/double_doc/actions/workflows/publish.yml) for output.
 
-After merging your changes:
-1. Create a PR with a version bump and updated changelog.
-2. After that PR gets merged, create a new tag (by running `gem_push=no rake release` or via Github releases).
-3. This will trigger the publishing workflow—[approve it in Github Actions](https://github.com/zendesk/double_doc/actions/workflows/publish.yml)).
+To create a pre-release from a non-main branch:
+1. change the version in `version.rb` to something like `1.2.0.pre.1` or `2.0.0.beta.2`,
+2. push this change to your branch,
+3. go to [Actions → “Publish to RubyGems.org” on GitHub](https://github.com/zendesk/double_doc/actions/workflows/publish.yml),
+4. click the “Run workflow” button,
+5. pick your branch from a dropdown.
 
 ### TODO
 * Support for directory structures
